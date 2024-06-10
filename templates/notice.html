@@ -1,0 +1,134 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+
+        <h2>NOTICE</h2><br>
+        <label for="notice_id">Notice Id:</label>
+        <input type="number" id="notice_id" name="notice_id">
+        <br><br>
+
+        <label for="notice_title">Notice Title:</label>
+        <input type="text" id="notice_title" name="notice_title">
+        <br><br>
+
+        <label for="notice_content">Notice Content:</label>
+        <textarea id="notice_content" name="notice_content"  rows="10"  cols="20"></textarea>
+        <br><br>
+
+        <label for="date">Notice Date:</label>
+        <input type="date" id="date" name="date">
+        <br><br>
+
+        <input type="submit" value="Submit">
+
+
+    </form>
+</body>
+</html>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice Form</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, textarea {
+            margin-bottom: 15px;
+            height: 25px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <form action="/notice" method="post" onsubmit="return validateForm()">
+        <h2>NOTICE</h2>
+        <label for="notice_id">Notice ID:</label>
+        <input type="number" id="notice_id" name="notice_id"><br><br>
+
+        <label for="notice_title">Notice Title:</label>
+        <input type="text" id="notice_title" name="notice_title"><br><br>
+        
+        <label for="notice_content">Notice Content:</label>
+        <textarea id="notice_content" name="notice_content" rows="10" cols="20"></textarea><br><br>
+
+        <label for="date"> Date:</label>
+        <input type="date" id="date" name="date"><br><br>
+
+        <input type="submit" value="Submit"><br>
+    </form>
+
+    <script>
+        function validateForm() {
+            var noticeId = document.getElementById("notice_id").value.trim();
+            var noticeTitle = document.getElementById("notice_title").value.trim();
+            var noticeContent = document.getElementById("notice_content").value.trim();
+            var noticeDate = document.getElementById("date").value.trim();
+
+            if (noticeId === "" || isNaN(noticeId)) {
+                alert("Notice ID is required and must be a number.");
+                return false;
+            }
+
+            if (noticeTitle === "") {
+                alert("Notice Title is required.");
+                return false;
+            }
+
+            if (noticeContent === "") {
+                alert("Notice Content is required.");
+                return false;
+            }
+
+            if (noticeDate === "") {
+                alert("Notice Date is required.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+            height: 25px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form action="/document" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
+            <h2>DOCUMENTS</h2>
+            <label for="doc_id">Document Id:</label>
+            <input type="number" id="doc_id" name="doc_id">
+            <br><br>
+    
+            <label for="doc_name">Document Name:</label>
+            <input type="text" id="doc_name" name="doc_name">
+            <br><br>
+    
+            <label for="doc_type">Document Type:</label>
+            <select id="doc_type" name="doc_type" style="height: 30px;">
+                <option value="pdf">PDF</option>
+                <option value="docx">DOCX</option>
+            </select>
+            <br><br>
+    
+            <label for="file">Upload File:</label>
+            <input type="file" id="file" name="file" required><br><br>
+    
+            <input type="submit" value="Upload">
+    
+        </form>
+
+    </div>
+    
+</body>
+</html>
+
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .error {
+            border-color: red;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form action="" method="post" onsubmit="return validateForm()">
+            <h2>DOCUMENTS</h2>
+            <label for="doc_id">Document Id:</label>
+            <input type="number" id="doc_id" name="doc_id" required>
+            <span class="error-message" id="doc_id_error"></span><br><br>
+
+            <label for="doc_name">Document Name:</label>
+            <input type="text" id="doc_name" name="doc_name" required>
+            <span class="error-message" id="doc_name_error"></span><br><br>
+
+            <label for="doc_type">Document Type:</label>
+            <select id="doc_type" name="doc_type" required>
+                <option value="pdf">PDF</option>
+                <option value="docx">DOCX</option>
+            </select>
+            <span class="error-message" id="doc_type_error"></span><br><br>
+
+            <label for="doc_file">Document File:</label>
+            <input type="file" id="doc_file" name="doc_file">
+            <br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var isValid = true;
+            var docId = document.getElementById("doc_id").value.trim();
+            var docName = document.getElementById("doc_name").value.trim();
+            var docType = document.getElementById("doc_type").value;
+
+            // Clear any previous error messages
+            document.getElementById("doc_id_error").innerHTML = "";
+            document.getElementById("doc_name_error").innerHTML = "";
+            document.getElementById("doc_type_error").innerHTML = "";
+
+            // Check for empty fields
+            if (docId === "") {
+                document.getElementById("doc_id").classList.add("error");
+                document.getElementById("doc_id_error").innerHTML = "Please enter a Document Id";
+            }
+        }
+    </script>
+-->

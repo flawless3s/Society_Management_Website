@@ -1,0 +1,260 @@
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Society Management Form</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+
+        
+    </style>
+    <script>
+        function validateForm() {
+            var role = document.getElementById("role").value;
+            var userId = document.getElementById("user_id").value;
+            var password = document.getElementById("password").value;
+            var societyId = document.getElementById("society_id").value;
+
+            
+
+            if (role === "") {
+                alert("Role is mandatory.");
+                return false;
+            }
+
+            if (userId === "") {
+                alert("User ID is compulsory.");
+                return false;
+            }
+
+            if (password.length > 12) {
+                alert("Password should not be greater than 12 characters.");
+                return false;
+            }
+
+            if (societyId.length > 5 || isNaN(societyId)) {
+                alert("Society ID should not be greater than 5 digits and should be numeric.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Society Login Form</h2>
+        <form action="/submit_form" method="post" onsubmit="return validateForm()">
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="secretary">Secretary</option>
+                <option value="treasurer">Treasurer</option>
+                <option value="resident">Resident</option>
+                <option value="security">Security</option>
+            </select>
+            
+            <br>
+            
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" name="user_id" required>
+            
+            <br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <br>
+            
+            <label for="society_id">Society ID:</label>
+            <input type="text" id="society_id" name="society_id" required>
+            
+            <br>
+            
+            <input type="submit" value="LOGIN">
+        </form>
+    </div>
+</body>
+</html>
+
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Society Management Form</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+            height: 25px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+
+        /* Error styles */
+        .error {
+            border: 1px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var role = document.getElementById("role");
+            var userId = document.getElementById("user_id");
+            var password = document.getElementById("password");
+            var societyId = document.getElementById("society_id");
+
+            // Reset error styles and messages
+            var elements = document.querySelectorAll('.error');
+            elements.forEach(function(el) {
+                el.classList.remove('error');
+                el.nextElementSibling.textContent = ''; // Clear error messages
+            });
+
+            var isValid = true;
+
+            if (role.value === "") {
+                role.classList.add('error'); // Add error class to highlight the field
+                role.nextElementSibling.textContent = 'Role is mandatory.'; // Display error message
+                isValid = false;
+            }
+
+            if (userId.value === "") {
+                userId.classList.add('error');
+                userId.nextElementSibling.textContent = 'User ID is compulsory.';
+                isValid = false;
+            }
+
+            if (password.value.length > 12) {
+                password.classList.add('error');
+                password.nextElementSibling.textContent = 'Password should not be greater than 12 characters.';
+                isValid = false;
+            }
+
+            if (societyId.value.length > 5 || isNaN(societyId.value)) {
+                societyId.classList.add('error');
+                societyId.nextElementSibling.textContent = 'Society ID should not be greater than 5 digits and should be numeric.';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2> Login </h2>
+        <form action="/login" method="post" onsubmit="return validateForm()">
+            <label for="role">Role:</label>
+            <select id="role" name="role" required style="height: 30px;">
+                <option value="">Select Role</option>
+                
+                <option value="Secretary">Secretary</option>
+                <option value="Treasurer">Treasurer</option>
+                <option value="Resident">Resident</option>
+                <option value="Security">Security</option>
+            </select>
+            <span class="error-message"></span>
+            <br><br>
+            
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" name="user_id" required>
+            <span class="error-message"></span>
+            <br><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <span class="error-message"></span>
+            <br><br>
+            
+            <label for="society_id">Society ID:</label>
+            <input type="text" id="society_id" name="society_id" required>
+            <span class="error-message"></span>
+            <br><br>
+            
+            <input type="submit" value="LOGIN"><br>
+        </form>
+    </div>
+</body>
+</html>
+
+
+

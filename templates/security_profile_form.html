@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Form</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+            height: 25px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var sec_id = document.forms["securityForm"]["sec_id"].value;
+            var sec_name = document.forms["securityForm"]["sec_name"].value;
+            var sec_duty = document.forms["securityForm"]["sec_duty"].value;
+
+            if (sec_id.length > 5 || sec_id === "") {
+                alert("Security ID must be provided and cannot exceed 5 digits.");
+                return false;
+            }
+
+            if (sec_name === "" || sec_name.length > 20) {
+                alert("Security name must be provided and cannot exceed 20 characters.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+    <h2>Security Profile</h2>
+    <form name="securityForm" action="" onsubmit="return validateForm()" method="">
+        <label for="sec_id">Security ID:</label>
+        <input type="number" id="sec_id" name="sec_id"><br><br>
+        
+        <label for="sec_name">Security Name:</label>
+        <input type="text" id="sec_name" name="sec_name"><br><br>
+        
+        <label for="sec_duty">Security Duty:</label>
+        <select name="sec_duty" id="sec_duty" style="height: 30px;">
+            <option value="">Select Duty</option>
+            <option value="night">Night</option>
+            <option value="morning">Morning</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit"><br>
+    </form>
+    </div>
+
+</body>
+</html>

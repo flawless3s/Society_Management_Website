@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Role Change</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+            height: 25px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var flat_no = document.forms["roleChangeForm"]["flat_no"].value;
+            var name = document.forms["roleChangeForm"]["name"].value;
+            var old_role = document.forms["roleChangeForm"]["old_role"].value;
+            var new_role = document.forms["roleChangeForm"]["new_role"].value;
+
+            if (!flat_no.match(/^[0-9]{1,5}$/)) {
+                alert("Flat No must be a number between 1 and 99999.");
+                return false;
+            }
+
+            if (name === "" || name.length > 50) {
+                alert("Name must be provided and cannot exceed 50 characters.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+    
+    <div class="form-container">
+    <h2>Role Change</h2>
+    <form name="roleChangeForm" action="/rolechange" onsubmit="return validateForm()" method="post">
+        <label for="flat_no">Flat No:</label> <!--validation incorrect -->
+        <input type="text" id="flat_no" name="flat_no"><br><br>
+        
+        <label for="name">Resident Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="old_role">Old Role:</label>
+        <select id="old_role" name="old_role" required style="height: 30px;">
+            <option value="">Select Role</option>
+            <option value="secretary">Secretary</option>
+            <option value="treasurer">Treasurer</option>
+            <option value="resident">Resident</option>
+            <option value="security">Security</option>
+        </select>
+        <br>
+        <br>
+        
+        <label for="new_role">New Role:</label>
+        <select id="new_role" name="new_role" required style="height: 30px;">
+            <option value="">Select Role</option>
+            <option value="secretary">Secretary</option>
+            <option value="treasurer">Treasurer</option>
+            <option value="resident">Resident</option>
+            <option value="security">Security</option>
+        </select>
+        <br>
+        <br>
+        
+        <input type="submit" value="Update"><br>
+    </form>
+    </div>
+
+</body>
+</html>

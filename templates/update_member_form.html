@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update member</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+            height: 25px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var flat_no = document.forms["flatForm"]["flat_no"].value;
+            var resident_name = document.forms["flatForm"]["resident_name"].value;
+            var resident_number = document.forms["flatForm"]["resident_number"].value;
+            var role = document.forms["flatForm"]["role"].value;
+            var flat_size = document.forms["flatForm"]["flat_size"].value;
+            var rent = document.forms["flatForm"]["rent"].value;
+            var start_contract = document.forms["flatForm"]["start_contract"].value;
+            var end_contract = document.forms["flatForm"]["end_contract"].value;
+            var rent_status = document.forms["flatForm"]["rent_status"].value;
+
+            if (!flat_no.match(/^[0-9]{1,10}$/)) {
+                alert("Flat No must be a number between 1 and 9999999999.");
+                return false;
+            }
+
+            if (resident_name === "" || resident_name.length > 20) {
+                alert("Resident name must be provided and cannot exceed 20 characters.");
+                return false;
+            }
+
+            if (!resident_number.match(/^[0-9]{1,10}$/)) {
+                alert("Resident number must be a number between 1 and 9999999999.");
+                return false;
+            }
+
+            if (!flat_size.match(/^[0-9]{1,5}$/)) {
+                alert("Flat size must be a number between 1 and 10.");
+                return false;
+            }
+
+            if (!rent.match(/^[0-9]{1,10}$/)) {
+                alert("Rent must be a number between 1 and 9999999999.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+    <h2>Flat Details</h2>
+    <form name="flatForm" action="" onsubmit="return validateForm()" method="">
+        <label for="flat_no">Flat No:</label> <!--invalid validation -->
+        <input type="text" id="flat_no" name="flat_no"><br><br>
+        
+        <label for="resident_name">Resident Name:</label>
+        <input type="text" id="resident_name" name="resident_name"><br><br>
+        
+        <label for="resident_number">Resident Number:</label>
+        <input type="number" id="resident_number" name="resident_number"><br><br>
+        
+        <label for="role">Role:</label>
+            <select id="role" name="role" required style="height: 30px;">
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="secretary">Secretary</option>
+                <option value="treasurer">Treasurer</option>
+                <option value="resident">Resident</option>
+                <option value="security">Security</option>
+            </select>
+        <br>
+        <br>
+        
+        <label for="flat_size">Flat Size (BHK):</label>
+        <select id="flat_size" name="flat_size" style="height: 30px;">
+            <option value="" selected>Select</option>
+            <option value="1rk">1rk</option>
+            <option value="1bhk">1bhk</option>
+            <option value="2bhk">2bhk</option>
+            <option value="3bhk">3bhk</option>
+            <option value="4bhk">4bhk</option>
+        </select>
+        <br>
+        <br>
+        
+        <label for="rent">Rent (Amt):</label>
+        <input type="number" id="rent" name="rent"><br><br>
+        
+        <label for="start_contract">Start Contract:</label>
+        <input type="date" id="start_contract" name="start_contract"><br><br>
+        
+        <label for="end_contract">End Contract:</label>
+        <input type="date" id="end_contract" name="end_contract"><br><br>
+        
+        <label for="rent_status">Rent Status:</label>
+        <select id="rent_status" name="rent_status" style="height: 30px;">
+            <option value="" selected>Select</option>
+            <option value="Pending" >Pending</option>
+            <option value="Cleared">Cleared</option>
+        </select>
+
+        <input type="submit" value="Update"><br>
+    </form>
+    </div>
+
+</body>
+</html>

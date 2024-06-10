@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form action="/permissionrequired" method="post" onsubmit="return validateForm()">
+            <h2>Package Information</h2>
+
+            <label for="flat_no">Flat No:</label>
+            <input type="number" id="flat_no" name="flat_no" required>
+            <br><br>
+
+            <label for="package_desc">Package Description:</label>
+            <textarea id="package_desc" name="package_desc" rows="4" required></textarea><br><br>
+
+            <label for="date_arrival">Date of Arrival:</label>
+            <input type="date" id="date_arrival" name="date_arrival" required><br><br>
+
+            <label for="time_arrival">Time of Arrival:</label>
+            <input type="time" id="time_arrival" name="time_arrival" required><br><br>
+
+            <div class="submit-button">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var flatNo = document.getElementById("flat_no").value;
+            var packageDesc = document.getElementById("package_desc").value;
+            var dateArrival = document.getElementById("date_arrival").value;
+            var timeArrival = document.getElementById("time_arrival").value;
+
+            if (flatNo.trim() === "") {
+                alert("Please enter Flat No.");
+                return false;
+            }
+
+            if (packageDesc.trim() === "") {
+                alert("Please enter Package Description.");
+                return false;
+            }
+
+            if (dateArrival.trim() === "") {
+                alert("Please select Date of Arrival.");
+                return false;
+            }
+
+            if (timeArrival.trim() === "") {
+                alert("Please select Time of Arrival.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

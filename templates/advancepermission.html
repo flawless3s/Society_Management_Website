@@ -1,0 +1,163 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="flat_no">Flat No:</label>
+        <input type="number" id="flat_no" name="flat_no">
+        <br><br>
+
+        <label for="package_desc">Package Description:</label>
+        <textarea id="package_desc" name="package_desc"  rows="10"  cols="20"></textarea>
+        <br><br>
+
+        <label for="date_arrival">Date of Arrival:</label>
+        <input type="date" id="date_arrival" name="date_arrival">
+        <br><br>
+
+        <label for="time_arrival">Time of Arrival:</label>
+        <input type="time" id="time_arrival" name="time_arrival">
+        <br><br>
+
+        <label for="permission">Permission:</label>
+        <input type="radio" name="permission" value="YES">YES
+        <input type="radio" name="permission" value="NO">NO
+        <br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+            height: 25px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+
+        <form action="/advancepermission" method="post"  onsubmit="return validateForm()">
+            <h2>Package Information</h2>
+    
+            <label for="flat_no">Flat No:</label>                                <!-- invalid validation-->
+            <input type="number" id="flat_no" name="flat_no"><br><br>
+    
+            <!--<label for="Wing_no">Wing No:</label>                              
+            <input type="number" id="Wing_no" name="Wing_no"><br><br>-->
+    
+            <label for="package_desc">Package Description:</label>
+            <textarea id="package_desc" name="package_desc" rows="5"></textarea><br><br>
+    
+            <label for="date_arrival">Date of Arrival:</label>
+            <input type="date" id="date_arrival" name="date_arrival"><br><br>
+    
+            <label for="time_arrival">Time of Arrival:</label>
+            <input type="time" id="time_arrival" name="time_arrival"><br><br>
+    
+            <label for="permission">Permission:</label>
+            <div>
+                <input type="radio" id="permission_yes" name="permission" value="YES">
+                <label for="permission_yes">YES</label>
+                <input type="radio" id="permission_no" name="permission" value="NO">
+                <label for="permission_no">NO</label><br><br>
+            </div>
+    
+            <input type="submit" value="Submit"><br>
+        </form>
+
+
+    </div>
+
+    
+
+    <script>
+        function validateForm() {
+            var flatNo = document.getElementById("flat_no").value.trim();
+            var packageDesc = document.getElementById("package_desc").value.trim();
+            var dateArrival = document.getElementById("date_arrival").value.trim();
+            var timeArrival = document.getElementById("time_arrival").value.trim();
+            var permission = document.querySelector('input[name="permission"]:checked');
+
+            if (flatNo === "" || isNaN(flatNo)) {
+                alert("Flat No is required and must be a number.");
+                return false;
+            }
+
+            if (packageDesc === "") {
+                alert("Package Description is required.");
+                return false;
+            }
+
+            if (dateArrival === "") {
+                alert("Date of Arrival is required.");
+                return false;
+            }
+
+            if (timeArrival === "") {
+                alert("Time of Arrival is required.");
+                return false;
+            }
+
+            if (permission === null) {
+                alert("Please select a Permission option.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>
+
