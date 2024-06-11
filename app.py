@@ -8,10 +8,10 @@ from create import create_bp
 app = Flask(__name__)
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
         role = request.form['role']
@@ -22,15 +22,16 @@ def login():
         connection = get_connection()
         if connection:
             try:
-                login_db_query = "SELECT * FROM Login WHERE u_id = %s and password = %s and sid = %s and role = %s;"
+                login_db_query = "SELECT * FROM Login WHERE uid = %s and password = %s and sid = %s and role = %s;"
                 values = (user_id,password,society_id,role)
                 with connection.cursor() as cursor:
                     cursor.execute(login_db_query, values)
                     result = cursor.fetchall()
                     if len(result) == 1:
                         print("Login Successful!")
+                        return render_template('index.html')
                     else:
-                        print("Login Failed!")
+                        return render_template('login_failed.html')
             except Error as e:
                 print("Error:", e)
                 return render_template('error.html', error=str(e))
@@ -39,7 +40,7 @@ def login():
         else:
             return render_template('error.html', error="Database connection failed")
 
-        return render_template('update_role.html')
+    return render_template('login.html')
 
 
     

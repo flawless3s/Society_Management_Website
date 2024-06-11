@@ -43,7 +43,7 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">Apna Ghar</h1>
@@ -51,11 +51,11 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html" class="active">Home<br></a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="login.html">Services</a></li>
-          <li><a href="about.html">Join</a></li>
-          <li><a href="create.html">Create</a></li>
+          <li><a href="{{ url_for('index') }}" class="active">Home<br></a></li>
+          <li><a href="{{ url_for('login') }}">About</a></li>
+          <li><a href="{{ url_for('login') }}">Services</a></li>
+          <li><a href="{{ url_for('login') }}">Join</a></li>
+          <li><a href="{{ url_for('create.create') }}">Create</a></li>
           <!-- <li><a href="pricing.html">Pricing</a></li>-->
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
@@ -74,12 +74,12 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li>-->
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="{{ url_for('login') }}">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="login.html">Login</a>
+      <a class="btn-getstarted" href="{{ url_for('login') }}">Login</a>
 
     </div>
   </header>
@@ -137,7 +137,7 @@
           </div>
 
           <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
-            <img src="assets/img/hero-img.svg" class="img-fluid mb-3 mb-lg-0" alt="">
+            <img src="{{ url_for('static', filename='assets/img/hero-img.svg') }}" class="img-fluid mb-3 mb-lg-0" alt="">
           </div>
 
         </div>
@@ -154,10 +154,10 @@
 
       <div class="container">
 
-        <div class="row gy-4">
+        <div class="row gy-4">      
 
           <div class="col-lg-6 position-relative align-self-start order-lg-last order-first" data-aos="fade-up" data-aos-delay="200">
-            <img src="assets/img/about.jpg" class="img-fluid" alt="">
+            <img src="{{ url_for('static', filename='assets/img/about.jpg') }}" class="img-fluid" alt="">
             <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox play-btn"></a>
           </div>
 
@@ -209,34 +209,34 @@
 
       <div class="container">
 
-        <div class="row gy-4">
+        <div class="row gy-4">            
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="card">
               <div class="card-img">
-                <img src="./assets/img/login-icon-in-trendy-flat-style-isolated-on-white-background-approach-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-flat-style-for-graphic-design-vector.jpg" alt="login" class="img-fluid">
+                <img src="{{ url_for('static', filename='assets/img/login-icon-in-trendy-flat-style-isolated-on-white-background-approach-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-flat-style-for-graphic-design-vector.jpg') }}" alt="login" class="img-fluid">
               </div>
               <h3>Login</h3>
               <p>Log in to your account to access personalized society management tools, streamline communication, and stay updated with your community's activities.</p>
             </div>
           </div><!-- End Card Item -->
-
+          
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="card">
               <div class="card-img">
-                <img src="./assets/img/Co-creation_TheDesignGym.jpg" alt="" class="img-fluid">
+                <img src="{{ url_for('static', filename='assets/img/Co-creation_TheDesignGym.jpg') }}" alt="" class="img-fluid">
               </div>
-              <h3><a href="#" class="stretched-link">Create your Own Group</a></h3>
+              <h3><a href="{{ url_for('create.create') }}" class="stretched-link">Create your Own Group</a></h3>
               <p>Create your own group to efficiently manage your society. Customize settings, coordinate events, and enhance community engagement with our intuitive platform.</p>
             </div>
           </div><!-- End Card Item -->
-
+          
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="card">
               <div class="card-img">
-                <img src="./assets/img/JOIN-s.png" alt="" class="img-fluid">
+                <img src="{{ url_for('static', filename='assets/img/JOIN-s.png') }}" alt="" class="img-fluid">
               </div>
-              <h3><a href="#" class="stretched-link">Join Existing Group</a></h3>
+              <h3><a href="{{ url_for('login') }}" class="stretched-link">Join Existing Group</a></h3>
               <p>If you're new to the city and looking for a house, use our website to explore and learn about pre-established societies. Find the perfect community for your new home.</p>
             </div>
           </div><!-- End Card Item -->
@@ -250,8 +250,8 @@
 
     <!-- Call To Action Section -->
     <section id="call-to-action" class="call-to-action section">
-
-      <img src="assets/img/cta-bg.jpg" alt="">
+      
+      <img src="{{ url_for('static', filename='assets/img/cta-bg.jpg') }}" alt="">
 
       <div class="container">
         <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
@@ -278,10 +278,10 @@
       </div><!-- End Section Title -->
 
       <div class="container">
-
+        
         <div class="row gy-4 align-items-center features-item">
           <div class="col-md-5 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
-            <img src="assets/img/features-1.jpg" class="img-fluid" alt="">
+            <img src="{{ url_for('static', filename='assets/img/features-1.jpg') }}" class="img-fluid" alt="">
           </div>
           <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
             <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
@@ -296,10 +296,10 @@
             </ul>
           </div>
         </div><!-- Features Item -->
-
+        
         <div class="row gy-4 align-items-center features-item">
           <div class="col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-            <img src="assets/img/features-2.jpg" class="img-fluid" alt="">
+            <img src="{{ url_for('static', filename='assets/img/features-2.jpg') }}" class="img-fluid" alt="">
           </div>
           <div class="col-md-7 order-2 order-md-1" data-aos="fade-up" data-aos-delay="200">
             <h3>Corporis temporibus maiores provident</h3>
@@ -314,10 +314,10 @@
             </p>
           </div>
         </div><!-- Features Item -->
-
+        
         <div class="row gy-4 align-items-center features-item">
           <div class="col-md-5 d-flex align-items-center" data-aos="zoom-out">
-            <img src="assets/img/features-3.jpg" class="img-fluid" alt="">
+            <img src="{{ url_for('static', filename='assets/img/features-3.jpg') }}" class="img-fluid" alt="">
           </div>
           <div class="col-md-7" data-aos="fade-up">
             <h3>Sunt consequatur ad ut est nulla consectetur reiciendis animi voluptas</h3>
@@ -329,10 +329,10 @@
             </ul>
           </div>
         </div><!-- Features Item -->
-
+        
         <div class="row gy-4 align-items-center features-item">
           <div class="col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out">
-            <img src="assets/img/features-4.jpg" class="img-fluid" alt="">
+            <img src="{{ url_for('static', filename='assets/img/features-4.jpg') }}" class="img-fluid" alt="">
           </div>
           <div class="col-md-7 order-2 order-md-1" data-aos="fade-up">
             <h3>Quas et necessitatibus eaque impedit ipsum animi consequatur incidunt in</h3>
@@ -377,7 +377,7 @@
                 <li class="na"><i class="bi bi-x"></i> <span>Pharetra massa massa ultricies</span></li>
                 <li class="na"><i class="bi bi-x"></i> <span>Massa ultricies mi quis hendrerit</span></li>
               </ul>
-              <a href="#" class="buy-btn">Buy Now</a>
+              <!-- <a href="{{ url_for('index') }}" class="buy-btn">Buy Now</a> -->
             </div>
           </div><!-- End Pricing Item -->
 
@@ -392,7 +392,7 @@
                 <li><i class="bi bi-check"></i> <span>Pharetra massa massa ultricies</span></li>
                 <li><i class="bi bi-check"></i> <span>Massa ultricies mi quis hendrerit</span></li>
               </ul>
-              <a href="#" class="buy-btn">Buy Now</a>
+              <!-- <a href="{{ url_for('index') }}" class="buy-btn">Buy Now</a> -->
             </div>
           </div><!-- End Pricing Item -->
 
@@ -407,7 +407,7 @@
                 <li><i class="bi bi-check"></i> <span>Pharetra massa massa ultricies</span></li>
                 <li><i class="bi bi-check"></i> <span>Massa ultricies mi quis hendrerit</span></li>
               </ul>
-              <a href="#" class="buy-btn">Buy Now</a>
+              <!-- <a href="{{ url_for('index') }}" class="buy-btn">Buy Now</a> -->
             </div>
           </div><!-- End Pricing Item -->
 
@@ -419,8 +419,8 @@
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">
-
-      <img src="assets/img/testimonials-bg.jpg" class="testimonials-bg" alt="">
+      
+      <img src="{{ url_for('static', filename='assets/img/testimonials-bg.jpg') }}" class="testimonials-bg" alt="">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -441,10 +441,10 @@
             }
           </script>
           <div class="swiper-wrapper">
-
+            
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                <img src="{{ url_for('static', filename='assets/img/testimonials/testimonials-1.jpg') }}" class="testimonial-img" alt="">
                 <h3>Saul Goodman</h3>
                 <h4>Ceo &amp; Founder</h4>
                 <div class="stars">
@@ -457,10 +457,10 @@
                 </p>
               </div>
             </div><!-- End testimonial item -->
-
+            
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                <img src="{{ url_for('static', filename='assets/img/testimonials/testimonials-2.jpg') }}" class="testimonial-img" alt="">
                 <h3>Sara Wilsson</h3>
                 <h4>Designer</h4>
                 <div class="stars">
@@ -473,10 +473,10 @@
                 </p>
               </div>
             </div><!-- End testimonial item -->
-
+            
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+                <img src="{{ url_for('static', filename='assets/img/testimonials/testimonials-3.jpg') }}" class="testimonial-img" alt="">
                 <h3>Jena Karlis</h3>
                 <h4>Store Owner</h4>
                 <div class="stars">
@@ -489,10 +489,10 @@
                 </p>
               </div>
             </div><!-- End testimonial item -->
-
+            
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+                <img src="{{ url_for('static', filename='assets/img/testimonials/testimonials-4.jpg') }}" class="testimonial-img" alt="">
                 <h3>Matt Brandon</h3>
                 <h4>Freelancer</h4>
                 <div class="stars">
@@ -505,10 +505,10 @@
                 </p>
               </div>
             </div><!-- End testimonial item -->
-
+            
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                <img src="{{ url_for('static', filename='assets/img/testimonials/testimonials-5.jpg') }}" class="testimonial-img" alt="">
                 <h3>John Larson</h3>
                 <h4>Entrepreneur</h4>
                 <div class="stars">
@@ -610,7 +610,7 @@
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
+          <a href="{{ url_for('index') }}" class="logo d-flex align-items-center">
             <span class="sitename">Logis</span>
           </a>
           <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
@@ -625,22 +625,22 @@
         <div class="col-lg-2 col-6 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('index') }}">About us</a></li>
+            <li><a href="{{ url_for('index') }}">Services</a></li>
+            <li><a href="{{ url_for('index') }}">Terms of service</a></li>
+            <li><a href="{{ url_for('index') }}">Privacy policy</a></li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-6 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
+            <li><a href="{{ url_for('index') }}">Web Design</a></li>
+            <li><a href="{{ url_for('index') }}">Web Development</a></li>
+            <li><a href="{{ url_for('index') }}">Product Management</a></li>
+            <li><a href="{{ url_for('index') }}">Marketing</a></li>
+            <li><a href="{{ url_for('index') }}">Graphic Design</a></li>
           </ul>
         </div>
 
@@ -684,7 +684,7 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script> -->
 
   <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="{{ url_for('static',filename='assets/js/main.js') }}"></script>
 
 </body>
 
