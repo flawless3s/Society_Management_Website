@@ -2,9 +2,9 @@ from flask import Blueprint, request, render_template
 from mysql.connector import Error
 from database_connection import get_connection
 
-create_bp = Blueprint('create', __name__)
+create_bp = Blueprint('create', __name__, url_prefix='/create')
 
-@create_bp.route('/create', methods=['POST'])
+@create_bp.route('/', methods=['GET','POST'])
 def create():
     if request.method == 'POST':
         society_name = request.form['s_name']
@@ -43,12 +43,14 @@ def create():
                     cursor.execute(create_db_query, values) 
                     connection.commit()
                     print("Data inserted successfully")
+                    connection.close()
+                    return render_template('secretary_id.html')
             except Error as e:
                 print("Error:", e)
-                return render_template('error.html', error=str(e))
-            finally:
                 connection.close()
+                return render_template('error.html', error=str(e))
+
         else:
             return render_template('error.html', error="Database connection failed")
 
-        return render_template('secretary_id.html')
+    return render_template('create.html')

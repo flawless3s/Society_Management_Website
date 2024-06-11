@@ -326,6 +326,9 @@
     <div class="form-container">
         <form action="/create" method="post" onsubmit="return validateForm()">
             <h2>Create a New Society</h2>
+            <label for="sid">Society id:</label>           <!--check validation-->
+            <input type="number" id="sid" name="sid" required><br><br>
+            <span class="error-message"></span>
 
             <label for="s_name">Society Name:</label>
             <input type="text" id="s_name" name="s_name" required><br><br>
@@ -335,9 +338,6 @@
             <textarea id="s_address" name="s_address" rows="4" required></textarea><br><br>
             <span class="error-message"></span>
 
-            <label for="sid">Society id:</label>           <!--check validation-->
-            <input type="number" id="sid" name="sid" required><br><br>
-            <span class="error-message"></span>
 
             <label for="area" >Area:</label>            <!--check validation-->
             <select id="area" name="area" style="height: 30px;">
@@ -366,31 +366,10 @@
             <span class="error-message"></span>
             
             <label for="sect_number">Secretary Number:</label>
-            <input type="text" id="sect_number" name="sect_number" required><br><br>
+            <input type="number" id="sect_number" name="sect_number" required><br><br>
             <span class="error-message"></span>
             
-            <label for="total_flats">Total Flats:</label>   <!--incorrect validation-->
-            <input type="number" id="total_flats" name="total_flats" required><br><br>
-            <span class="error-message"></span>
-
-            <label for="empty_flats">Empty Flats:</label>   <!--incorrect validation-->
-            <input type="number" id="empty_flats" name="empty_flats" required><br><br>
-            <span class="error-message"></span>
-
-            <label for="total_wings">Total Wings:</label>   <!--incorrect validation-->
-            <input type="number" id="total_wings" name="total_wings" required><br><br>
-            <span class="error-message"></span>
-
-            <label for="total_floor">Total Floor:</label>   <!--incorrect validation-->
-            <input type="number" id="total_floor" name="total_floor" required><br><br>
-            <span class="error-message"></span>
-
-            <label for="flat_on_each_floor">Flat on each Floor:</label>   <!--incorrect validation-->
-            <input type="number" id="flat_on_each_floor" name="flat_on_each_floor" required><br><br>
-            <span class="error-message"></span>
-            
-            <h3>Builder Details:</h3>
-            
+            <h3>Builder Details:</h3><br>
             <label for="build_name">Builder Name:</label>
             <input type="text" id="build_name" name="build_name" required><br><br>
             <span class="error-message"></span>
@@ -402,6 +381,30 @@
             <label for="c_name">Company Name:</label>
             <input type="text" id="c_name" name="c_name" required><br><br>
             <span class="error-message"></span>
+
+            <h3>Society Details:</h3><br>
+            <label for="total_flats">Total Flats:</label>   <!--incorrect validation-->
+            <input type="number" id="total_flats" name="total_flats" required><br><br>
+            <span class="error-message"></span>
+
+            
+            <label for="total_wings">Total Wings:</label>   <!--incorrect validation-->
+            <input type="number" id="total_wings" name="total_wings" required><br><br>
+            <span class="error-message"></span>
+            
+            <label for="total_floor">Total Floor:</label>   <!--incorrect validation-->
+            <input type="number" id="total_floor" name="total_floor" required><br><br>
+            <span class="error-message"></span>
+            
+            <label for="empty_flats">Empty Flats:</label>   <!--incorrect validation-->
+            <input type="number" id="empty_flats" name="empty_flats" required><br><br>
+            <span class="error-message"></span>
+
+            <label for="flat_on_each_floor">Flat on each Floor:</label>   <!--incorrect validation-->
+            <input type="number" id="flat_on_each_floor" name="flat_on_each_floor" required><br><br>
+            <span class="error-message"></span>
+            
+            
             
             
             <input type="submit" value="Submit"><br>
@@ -425,7 +428,6 @@
 
             var isValid = true;
 
-            // Reset error styles and messages
             var elements = document.querySelectorAll('.error');
             elements.forEach(function(el) {
                 el.classList.remove('error');
