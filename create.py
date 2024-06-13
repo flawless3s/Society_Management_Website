@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, session, redirect, url_for
 from mysql.connector import Error
 from database_connection import get_connection
 
@@ -6,6 +6,8 @@ create_bp = Blueprint('create', __name__, url_prefix='/create')
 
 @create_bp.route('/', methods=['GET','POST'])
 def create():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
     if request.method == 'POST':
         society_name = request.form['s_name']
         Society_Address = request.form['s_address']
