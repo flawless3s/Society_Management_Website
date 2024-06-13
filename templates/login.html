@@ -180,7 +180,6 @@
             var role = document.getElementById("role");
             var userId = document.getElementById("user_id");
             var password = document.getElementById("password");
-            var societyId = document.getElementById("society_id");
 
             // Reset error styles and messages
             var elements = document.querySelectorAll('.error');
@@ -226,11 +225,11 @@
             <label for="role">Role:</label>
             <select id="role" name="role" required style="height: 30px;">
                 <option value="">Select Role</option>
-                
-                <option value="Secretary">Secretary</option>
-                <option value="Treasurer">Treasurer</option>
-                <option value="Resident">Resident</option>
-                <option value="Security">Security</option>
+                <option value="1">Admin</option>
+                <option value="2">Secretary</option>
+                <option value="3">Treasurer</option>
+                <option value="4">Resident</option>
+                <option value="5">Security</option>
             </select>
             <span class="error-message"></span>
             <br><br>
@@ -245,13 +244,17 @@
             <span class="error-message"></span>
             <br><br>
             
-            <label for="society_id">Society ID:</label>
-            <input type="text" id="society_id" name="society_id" required>
-            <span class="error-message"></span>
-            <br><br>
-            
             <input type="submit" value="LOGIN"><br>
         </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                 <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
     </div>
 </body>
 </html>

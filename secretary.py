@@ -1,11 +1,14 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, session, redirect, url_for
 from mysql.connector import Error 
 from database_connection import get_connection
 
 secretary_bp = Blueprint('secretary', __name__,url_prefix='/secretary')
 
+
 @secretary_bp.route('/', methods=['POST'])
 def secretary():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
     if request.method == 'POST':
         Secretary_Id = request.form['sect_id']
         Secretary_Password = request.form['sect_password']

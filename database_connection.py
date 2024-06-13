@@ -6,7 +6,7 @@ def get_connection():
             host="localhost",
             user="root",
             password="nmims@123",
-            database="mysociety_2",
+            database="mysociety_3",
         )
         return connection
     except Error as e:
