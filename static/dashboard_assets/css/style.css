@@ -215,6 +215,11 @@ h6 {
   background-color: #d3d3d4;
   border-color: #d3d3d4;
 }
+/* Overriding bootstrap colour for maintenance table */
+.bg-warning {
+  background-color: red !important;
+}
+
 
 /* Card */
 .card {
@@ -424,6 +429,12 @@ h6 {
 .header .search-form {
   width: 100%;
 }
+/*Removed serach bar and put user name instead styling below*/
+.header .Username {
+  color: #00008b; 
+  font-size: 24px; 
+}
+
 
 .header .search-form input {
   border: 0;
