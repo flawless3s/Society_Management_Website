@@ -5,6 +5,8 @@ from drive_link_conversion import convert_drive_link
 from fetching_image import fetch_image_from_google_drive
 from secretary import secretary_bp
 from create import create_bp
+from signup import signup_bp
+from data import user_data,fetch_maintenance_data
 from datetime import timedelta
 import os
 import base64
@@ -12,7 +14,7 @@ import base64
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=10)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=10)
 
 @app.route('/')
 def index():
@@ -82,24 +84,28 @@ def dashboard():
         # Encode image data to base64
         if image_data:
             encoded_image = base64.b64encode(image_data).decode('utf-8')
+            data = user_data(encoded_image,user_name)
         else:
             flash('Failed to fetch image data from Google Drive.')
             return redirect(url_for('login'))
 
         if role == 1:
-            return render_template('dashboard.html', photo=encoded_image, name = user_name)
+            return render_template('dashboard.html', details = data)
         elif role == 2:
-            return render_template('Secretary_dashboard.html', photo=encoded_image, name = user_name)
+            return render_template('Secretary_dashboard.html', details = data)
         elif role == 3:
-            return render_template('Treasurer_dashboard.html', photo=encoded_image, name = user_name)
+            return render_template('Treasurer_dashboard.html', details = data)
         elif role == 4:
-            return render_template('Member_dashboard.html', photo=encoded_image, name = user_name)
+            bill = fetch_maintenance_data()
+            print(bill)
+            return render_template('Member_dashboard.html', details = data, maintenance_bills = bill)
         elif role == 5:
-            return render_template('Security_dashboard.html', photo=encoded_image, name = user_name)
+            return render_template('Security_dashboard.html', details = data)
     else:
         flash('Photo link not found in session.')
         return redirect(url_for('login'))
-   
+
+app.register_blueprint(signup_bp)  
 app.register_blueprint(secretary_bp)
 app.register_blueprint(create_bp)
 
