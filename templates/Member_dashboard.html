@@ -28,7 +28,7 @@
 
 <!-- Template Main CSS File -->
 <link href="{{ url_for('static', filename='dashboard_assets/css/style.css') }}" rel="stylesheet">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -866,25 +866,24 @@
             </div>
 
             <div class="card-body">
-              <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+              <h5 class="card-title">Recent Notices <span>| Today</span></h5>
 
-              <div class="activity">
-
+              <div class="card-body-notice">
                 <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                  <div class="activity-content">
-                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
+                  <!-- <div class="activite-label">32 min</div> -->
+                  <!-- <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i> -->
+                  <div class="recent-activity" id="notices">
+                    <!-- Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae -->
                   </div>
                 </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
+    
+                <!-- <div class="activity-item d-flex">
                   <div class="activite-label">56 min</div>
                   <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
                   <div class="activity-content">
                     Voluptatem blanditiis blanditiis eveniet
                   </div>
-                </div><!-- End activity item-->
+                </div><!-- End activity item
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">2 hrs</div>
@@ -892,7 +891,7 @@
                   <div class="activity-content">
                     Voluptates corrupti molestias voluptatem
                   </div>
-                </div><!-- End activity item-->
+                </div><!-- End activity item
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">1 day</div>
@@ -900,7 +899,7 @@
                   <div class="activity-content">
                     Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
                   </div>
-                </div><!-- End activity item-->
+                </div><!-- End activity item
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">2 days</div>
@@ -908,7 +907,7 @@
                   <div class="activity-content">
                     Est sit eum reiciendis exercitationem
                   </div>
-                </div><!-- End activity item-->
+                </div><!-- End activity item
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">4 weeks</div>
@@ -916,14 +915,14 @@
                   <div class="activity-content">
                     Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
                   </div>
-                </div><!-- End activity item-->
-
+                </div><!-- End activity item
+ -->
               </div>
 
             </div>
           </div><!-- End Recent Activity -->
 
-          <!-- Budget Report -->
+          <!-- Budget Report 
           <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -997,7 +996,7 @@
             </div>
           </div><!-- End Budget Report -->
 
-          <!-- Website Traffic -->
+          <!-- Website Traffic
           <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -1164,7 +1163,7 @@
   
   <!-- Template Main JS File -->
   <script src="{{ url_for('static', filename='dashboard_assets/js/main.js') }}"></script>
-  
+  <script>var URL = "{{url_for('notice.notice')}}"</script>
 
 </body>
 

@@ -6,6 +6,7 @@ from fetching_image import fetch_image_from_google_drive
 from secretary import secretary_bp
 from create import create_bp
 from signup import signup_bp
+from notice import notice_bp
 from data import user_data,fetch_maintenance_data
 from datetime import timedelta
 import os
@@ -24,33 +25,35 @@ def index():
 def login():
     if request.method == 'POST':
         session.permanent = True
-
-        role = int(request.form['role'])
         user_id = request.form['user_id']
         password = request.form['password']
 
         connection = get_connection()
+        
         if connection:
             try:
-                login_db_query = "SELECT * FROM login WHERE uid = %s and password = %s and role_id = %s;"
-                values = (user_id, password, role)
+                login_db_query = "SELECT * FROM login WHERE uid = %s and password = %s;"
+                values = (user_id, password)
                 
                 with connection.cursor() as cursor:
                     cursor.execute(login_db_query, values)
                     login_result = cursor.fetchone()
                     
+                    
                     if login_result:
-                        session_db_query = "SELECT * FROM users where uid = %s and password = %s and role_id = %s;"
-                        values = (user_id,password, role)
+                        session_db_query = "SELECT * FROM users where uid = %s and password = %s;"
+                        values = (user_id,password)
 
                         cursor.execute(session_db_query, values)
                         session_result = cursor.fetchone()
+                        
 
                         session['user_id'] = session_result[2]
                         session['role'] = session_result[1]
                         session['name'] = session_result[4]
                         direct_photo_link = session_result[7]
 
+                        
                        
                         session['photo'] = convert_drive_link(direct_photo_link)
 
@@ -65,18 +68,20 @@ def login():
                 connection.close()
         else:
             return render_template('error.html', error="Database connection failed")
-
+        
     return render_template('login.html')
 
 
 @app.route('/dashboard', methods =['GET'])
 def dashboard():
     if 'user_id' not in session:
+        flash("Session has expired, Please login again.")
         return redirect(url_for('login'))
     
     role = session['role']
     user_name = session['name']
     photo_link = session.get('photo')
+    print(photo_link)
 
     if photo_link:
         image_data = fetch_image_from_google_drive(photo_link)
@@ -97,7 +102,6 @@ def dashboard():
             return render_template('Treasurer_dashboard.html', details = data)
         elif role == 4:
             bill = fetch_maintenance_data()
-            print(bill)
             return render_template('Member_dashboard.html', details = data, maintenance_bills = bill)
         elif role == 5:
             return render_template('Security_dashboard.html', details = data)
@@ -108,12 +112,13 @@ def dashboard():
 app.register_blueprint(signup_bp)  
 app.register_blueprint(secretary_bp)
 app.register_blueprint(create_bp)
+app.register_blueprint(notice_bp)
 
 @app.route('/logout')
 def logout():
     session.clear()
     flash('You were successfully logged out')
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=9000)
