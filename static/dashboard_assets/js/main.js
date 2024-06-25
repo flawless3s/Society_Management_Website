@@ -317,3 +317,33 @@
   }
 
 })();
+
+// Notice loading
+$(document).ready(function() {
+  // Load notices
+  $.getJSON(URL, function(data) {
+      let content = '';
+      $.each(data, function(index, notice) {
+          let noticeClass = '';
+          switch (notice.type) {
+              case 'Urgent':
+                  noticeClass = 'notice-urgent';
+                  break;
+              case 'Reminder':
+                  noticeClass = 'notice-reminder';
+                  break;
+              case 'Event':
+                  noticeClass = 'notice-event';
+                  break;
+              default:
+                  noticeClass = 'notice-general';
+          }
+          content += '<div class="notice ' + noticeClass + '">';
+          content += '<h3>' + notice.title + '</h3>';
+          content += '<p>' + notice.content + '</p>';
+          content += '<small>' + notice.date + '</small>';
+          content += '</div>';
+      });
+      $('#notices').html(content);
+  });
+});

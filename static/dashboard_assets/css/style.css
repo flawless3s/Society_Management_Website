@@ -227,6 +227,7 @@ h6 {
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  overflow: auto;
 }
 
 .card-header,
@@ -253,6 +254,13 @@ h6 {
 
 .card-body {
   padding: 0 20px 20px 20px;
+
+}
+/* Notice div css */
+.card-body-notice{
+  padding: 0 20px 20px 20px;
+  overflow-y: scroll;
+  height: 500px;
 }
 
 .card-img-overlay {
@@ -891,6 +899,30 @@ h6 {
 
 .dashboard .activity .activity-item:last-child .activity-content {
   padding-bottom: 0;
+}
+.recent-activity {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  border-radius: 8px;
+}
+.notice {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); 
+}
+.notice-urgent {
+  border-left: 4px solid #e74c3c;
+}
+.notice-reminder {
+  border-left: 4px solid #f1c40f;
+}
+.notice-event {
+  border-left: 4px solid #3498db;
+}
+.notice-general {
+  border-left: 4px solid #2ecc71;
 }
 
 /* News & Updates */
