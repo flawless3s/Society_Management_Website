@@ -15,7 +15,7 @@ import base64
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=10)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=10)
 
 @app.route('/')
 def index():
