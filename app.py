@@ -7,6 +7,10 @@ from secretary import secretary_bp
 from create import create_bp
 from signup import signup_bp
 from notice import notice_bp
+from maintenance import maintenance_bp
+from package_manager import package_bp
+from document_app import document_bp
+from flat_detail import flat_detail_bp
 from data import user_data,fetch_maintenance_data
 from datetime import timedelta
 import os
@@ -15,7 +19,7 @@ import base64
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=10)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=10)
 
 @app.route('/')
 def index():
@@ -51,6 +55,7 @@ def login():
                         session['user_id'] = session_result[2]
                         session['role'] = session_result[1]
                         session['name'] = session_result[4]
+                        session['sid'] = session_result[0]
                         direct_photo_link = session_result[7]
 
                         
@@ -101,8 +106,8 @@ def dashboard():
         elif role == 3:
             return render_template('Treasurer_dashboard.html', details = data)
         elif role == 4:
-            bill = fetch_maintenance_data()
-            return render_template('Member_dashboard.html', details = data, maintenance_bills = bill)
+            # bill = fetch_maintenance_data()
+            return render_template('Member_dashboard.html', details = data)
         elif role == 5:
             return render_template('Security_dashboard.html', details = data)
     else:
@@ -113,6 +118,10 @@ app.register_blueprint(signup_bp)
 app.register_blueprint(secretary_bp)
 app.register_blueprint(create_bp)
 app.register_blueprint(notice_bp)
+app.register_blueprint(package_bp)
+app.register_blueprint(document_bp)
+app.register_blueprint(flat_detail_bp)
+app.register_blueprint(maintenance_bp)
 
 @app.route('/logout')
 def logout():

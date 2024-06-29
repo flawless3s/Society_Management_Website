@@ -88,14 +88,11 @@
 <body>
     <div class="form-container">
 
-        <form action="/advancepermission" method="post"  onsubmit="return validateForm()">
+        <form action="{{ url_for('package_manager.advancepermission') }}" method="post" onsubmit="return validateForm()">
             <h2>Package Information</h2>
     
             <label for="flat_no">Flat No:</label>                                <!-- invalid validation-->
-            <input type="number" id="flat_no" name="flat_no"><br><br>
-    
-            <!--<label for="Wing_no">Wing No:</label>                              
-            <input type="number" id="Wing_no" name="Wing_no"><br><br>-->
+            <input type="text" id="flat_no" name="flat_no"><br><br>
     
             <label for="package_desc">Package Description:</label>
             <textarea id="package_desc" name="package_desc" rows="5"></textarea><br><br>
@@ -108,9 +105,9 @@
     
             <label for="permission">Permission:</label>
             <div>
-                <input type="radio" id="permission_yes" name="permission" value="YES">
+                <input type="radio" id="permission_yes" name="permission" value="true">
                 <label for="permission_yes">YES</label>
-                <input type="radio" id="permission_no" name="permission" value="NO">
+                <input type="radio" id="permission_no" name="permission" value="false">
                 <label for="permission_no">NO</label><br><br>
             </div>
     
@@ -130,8 +127,8 @@
             var timeArrival = document.getElementById("time_arrival").value.trim();
             var permission = document.querySelector('input[name="permission"]:checked');
 
-            if (flatNo === "" || isNaN(flatNo)) {
-                alert("Flat No is required and must be a number.");
+            if (flatNo === "") {
+                alert("Flat No is required");
                 return false;
             }
 
