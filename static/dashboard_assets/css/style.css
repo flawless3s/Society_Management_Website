@@ -262,6 +262,36 @@ h6 {
   overflow-y: scroll;
   height: 500px;
 }
+/* Package table css */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+.approve-button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.reject-button {
+  background-color: #f44336; /* Red */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.approve-button:hover {
+  background-color: #45a049; /* Darker green */
+}
+
+.reject-button:hover {
+  background-color: #e53935; /* Darker red */
+}
+.tr-dim{
+  height: 50px;
+}
+/* ----------------------------- */
 
 .card-img-overlay {
   background-color: rgba(255, 255, 255, 0.6);

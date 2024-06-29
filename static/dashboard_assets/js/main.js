@@ -347,3 +347,41 @@ $(document).ready(function() {
       $('#notices').html(content);
   });
 });
+
+// Package Manager
+function handleApprove(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('data-item-id');
+  console.log('Approving item:', row);  // Add this line
+  $.post(`/package_manager/approve/${itemId}`, function(response) {
+      if (response.status === 'success') {
+          row.style.backgroundColor = 'lightgreen';
+          row.querySelectorAll('td').forEach(td => {
+            td.style.backgroundColor = 'lightgreen';
+          });
+          console.log(response.message);
+      } else {
+          console.error(response.message);
+      }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.error('Error approving:', textStatus, errorThrown);
+  });
+}
+
+function handleReject(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('data-item-id');
+  console.log('Rejecting item:', itemId);  // Add this line
+  $.post(`/package_manager/reject/${itemId}`, function(response) {
+      if (response.status === 'success') {
+        row.style.backgroundColor = 'lightcoral';
+        row.querySelectorAll('td').forEach(td => {
+          td.style.backgroundColor = 'lightcoral';
+        });
+      } else {
+          console.error(response.message);
+      }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.error('Error rejecting:', textStatus, errorThrown);
+  });
+}

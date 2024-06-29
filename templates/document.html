@@ -50,21 +50,11 @@
 </head>
 <body>
     <div class="form-container">
-        <form action="/document" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
+        <form action="{{url_for('document.document_form')}}" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
             <h2>DOCUMENTS</h2>
-            <label for="doc_id">Document Id:</label>
-            <input type="number" id="doc_id" name="doc_id">
-            <br><br>
     
             <label for="doc_name">Document Name:</label>
             <input type="text" id="doc_name" name="doc_name">
-            <br><br>
-    
-            <label for="doc_type">Document Type:</label>
-            <select id="doc_type" name="doc_type" style="height: 30px;">
-                <option value="pdf">PDF</option>
-                <option value="docx">DOCX</option>
-            </select>
             <br><br>
     
             <label for="file">Upload File:</label>
