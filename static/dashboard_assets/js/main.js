@@ -352,7 +352,7 @@ $(document).ready(function() {
 function handleApprove(button) {
   const row = button.closest('tr');
   const itemId = row.getAttribute('data-item-id');
-  console.log('Approving item:', row);  // Add this line
+  console.log('Approving item:', itemId);  // Add this line
   $.post(`/package_manager/approve/${itemId}`, function(response) {
       if (response.status === 'success') {
           row.style.backgroundColor = 'lightgreen';

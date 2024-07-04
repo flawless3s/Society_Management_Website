@@ -48,11 +48,11 @@
 </head>
 <body>
     <div class="form-container">
-        <form action="/permissionrequired" method="post" onsubmit="return validateForm()">
+        <form action="{{ url_for('package_manager.permissionrequired') }}" method="post" onsubmit="return validateForm()">
             <h2>Package Information</h2>
 
             <label for="flat_no">Flat No:</label>
-            <input type="number" id="flat_no" name="flat_no" required>
+            <input type="text" id="flat_no" name="flat_no" required>
             <br><br>
 
             <label for="package_desc">Package Description:</label>

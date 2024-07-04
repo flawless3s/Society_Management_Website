@@ -159,6 +159,79 @@ def fetch_flat_data():
             return [('Could not fetch data')]        
     else:
         return 'Database connection failed'
+    
 
 
+
+class MyGatePermissionSecurity:
+    def __init__(self, item_id, sid, flat_no, package_desc, time_arrival, date_arrival, permission=False):
+        self.item_id = item_id
+        self.sid = sid
+        self.flat_no = flat_no
+        self.package_desc = package_desc
+        self.time_arrival = time_arrival
+        self.date_arrival = date_arrival
+        self.permission = permission
+
+    def __str__(self):
+        return (f"MyGatePermissionSecurity(item_id={self.item_id}, sid={self.sid}, "
+                f"flat_no='{self.flat_no}', package_desc='{self.package_desc}', "
+                f"time_arrival='{self.time_arrival}', date_arrival='{self.date_arrival}', "
+                f"permission={self.permission})")
+    
+
+def fetch_package_permission():
+    connection = get_connection()
+    if connection:
+        try:
+            permission_query = "Select * from MyGate_Permission_Security where sid=%s;"
+            value = (session['sid'],)
+            # print(session['sid'])
+            
+            with connection.cursor() as cursor:
+                cursor.execute(permission_query, value)
+                result = cursor.fetchall()
+                return convert_tuples_to_objects(result,MyGatePermissionSecurity)
+
+
+        except Error as e:
+            return [('Could not fetch data')]        
+    else:
+        return 'Database connection failed'
+
+class MyGateResident:
+    def __init__(self, package_id, sid, flat_no, package_desc, time_arrival, date_arrival, permission=False):
+        self.package_id = package_id
+        self.sid = sid
+        self.flat_no = flat_no
+        self.package_desc = package_desc
+        self.time_arrival = time_arrival
+        self.date_arrival = date_arrival
+        self.permission = permission
+
+    def __str__(self):
+        return (f"MyGatePermissionSecurity(item_id={self.item_id}, sid={self.sid}, "
+                f"flat_no='{self.flat_no}', package_desc='{self.package_desc}', "
+                f"time_arrival='{self.time_arrival}', date_arrival='{self.date_arrival}', "
+                f"permission={self.permission})")
+    
+
+   
+def fetch_package_advance():
+    connection = get_connection()
+    if connection:
+        try:
+            permission_query = "Select * from MyGate_Resident where sid=%s and resident_permission=1;"
+            value = (session['sid'],)
+            
+            with connection.cursor() as cursor:
+                cursor.execute(permission_query, value)
+                result = cursor.fetchall()
+                print(result)
+                return convert_tuples_to_objects(result,MyGateResident)
+
+        except Error as e:
+            return [(e,)]        
+    else:
+        return 'Database connection failed'
 

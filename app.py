@@ -11,7 +11,7 @@ from maintenance import maintenance_bp
 from package_manager import package_bp
 from document_app import document_bp
 from flat_detail import flat_detail_bp
-from data import user_data,fetch_maintenance_data
+from data import user_data,fetch_package_permission,fetch_package_advance
 from datetime import timedelta
 import os
 import base64
@@ -109,7 +109,9 @@ def dashboard():
             # bill = fetch_maintenance_data()
             return render_template('Member_dashboard.html', details = data)
         elif role == 5:
-            return render_template('Security_dashboard.html', details = data)
+            permission,expected = fetch_package_permission(), fetch_package_advance()
+            print(expected)
+            return render_template('Security_Dashboard.html', details = data, package_permissions = permission, packages_expected = expected)
     else:
         flash('Photo link not found in session.')
         return redirect(url_for('login'))

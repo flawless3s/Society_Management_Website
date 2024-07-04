@@ -13,7 +13,6 @@ def notice():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Notice ORDER BY post_date DESC LIMIT 5")
     notices = cursor.fetchall()
-    # print(notices)
     cursor.close()
     conn.close()
 
@@ -21,10 +20,10 @@ def notice():
     for notice in notices:
         notice_list.append({
             'id': notice[0],
-            'title': notice[1],
-            'content': notice[2],
-            'type': notice[3],
-            'date': notice[4]
+            'title': notice[2],
+            'content': notice[3],
+            'type': notice[4],
+            'date': notice[5]
         })
     return jsonify(notice_list)
 
