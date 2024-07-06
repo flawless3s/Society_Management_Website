@@ -385,3 +385,36 @@ function handleReject(button) {
       console.error('Error rejecting:', textStatus, errorThrown);
   });
 }
+
+// Webpage loading Dynamic
+function loadPage(url) {
+  fetch(url)
+      .then(response => response.text())
+      .then(html => {
+          document.getElementById('main').innerHTML = html;
+      })
+      .catch(error => console.error('Error loading page:', error));
+}
+
+// Society Delete Button
+function handleDelete(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Deleting item:', itemId);
+
+  $.post(`/admin/delete/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightcoral';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightcoral';
+      });
+    } else {
+      alert(response.message); // Display error message in alert
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error deleting:', textStatus, errorThrown);
+    alert('Society is Linked with member so it cannot be deleted'); // Display generic error message
+  });
+}
+

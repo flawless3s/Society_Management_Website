@@ -216,9 +216,9 @@ h6 {
   border-color: #d3d3d4;
 }
 /* Overriding bootstrap colour for maintenance table */
-.bg-warning {
+/* .bg-warning {
   background-color: red !important;
-}
+} */
 
 
 /* Card */
