@@ -1,6 +1,7 @@
 from mysql.connector import Error
 from database_connection import get_connection
 from flask import session
+from datetime_checker import check_time
 class user_data:
     def __init__(self, image, username):
         self.image = image
@@ -80,14 +81,14 @@ def fetch_package_data():
                 session['flat_no'] = result[0]
 
                 if result:
-                    package_query = "Select * from MyGate_Permission_Security where sid=%s and flat_no=%s and permission = 0;"
+                    package_query = "Select * from MyGate_Permission_Security where sid=%s and flat_no=%s and permission = '0';"
                     value = (session['sid'],session['flat_no'])
             
 
                     cursor.execute(package_query, value)
                     # print("Hello")
                     result = cursor.fetchall()
-                    # print(result)
+                    #print(result)
                     return convert_tuples_to_objects(result,Item)
                 else:
                     return [('Could not fetch data')] 
@@ -181,6 +182,7 @@ class MyGatePermissionSecurity:
     
 
 def fetch_package_permission():
+    check_time()
     connection = get_connection()
     if connection:
         try:

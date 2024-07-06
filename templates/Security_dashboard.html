@@ -235,10 +235,12 @@
                         <td><a href="#" class="text-primary">{{permissions.package_desc}}</a></td>
                         <td>{{permissions.time_arrival}}</td>
                         <td>{{permissions.date_arrival}}</td>
-                        {% if permissions.permission %}
+                        {% if permissions.permission == '1' %}
                             <td><span class="badge bg-success">Approved</span></td>
+                        {% elif permissions.permission == '0'  %}
+                            <td><span class="badge bg-warning">Pending</span></td>
                         {% else %}
-                            <td><span class="badge bg-warning">Not Approved</span></td>
+                            <td><span class="badge bg-danger">Not Approved</span></td>
                         {% endif %}
                       </tr>
                       {% endfor %}

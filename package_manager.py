@@ -73,7 +73,7 @@ def approve_item(item_id):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute('UPDATE MyGate_Permission_Security SET permission = %s WHERE package_id = %s', (1,item_id))
+        cursor.execute('UPDATE MyGate_Permission_Security SET permission = %s WHERE package_id = %s', ('1',item_id))
         conn.commit()
         conn.close()
         return jsonify({'status': 'success', 'message': f'Item {item_id} approved'})
@@ -85,7 +85,7 @@ def reject_item(item_id):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute('UPDATE MyGate_permission_security SET permission = %s WHERE package_id = %s', (0,item_id))
+        cursor.execute('UPDATE MyGate_permission_security SET permission = %s WHERE package_id = %s', ('2',item_id))
         conn.commit()
         conn.close()
         return jsonify({'status': 'success', 'message': f'Item {item_id} rejected'})
