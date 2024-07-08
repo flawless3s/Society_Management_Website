@@ -448,7 +448,7 @@
                     {% if bill.payment_status %}
                         <td><span class="badge bg-success">Paid</span></td>
                     {% else %}
-                        <td><span class="badge bg-warning">Unpaid</span></td>
+                        <td><span class="badge bg-danger">Unpaid</span></td>
                     {% endif %}
                     <td>{{bill.payment_date or 'N/A'}}</td>
                   </tr>

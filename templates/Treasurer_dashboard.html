@@ -57,7 +57,7 @@
     </div><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
+      <!--<ul class="d-flex align-items-center">
 
         <li class="nav-item d-block d-lg-none">
           <a class="nav-link nav-icon search-bar-toggle " href="#">
@@ -65,14 +65,14 @@
           </a>
         </li><!-- End Search Icon-->
 
-        <li class="nav-item dropdown">
+        <!--<li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">4</span>
-          </a><!-- End Notification Icon -->
+          </a> End Notification Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+          <!--<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have 4 new notifications
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
@@ -140,12 +140,12 @@
 
         </li><!-- End Notification Nav -->
 
-        <li class="nav-item dropdown">
+        <!--<li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
             <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
+          </a><!-- End Messages Icon 
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
@@ -204,7 +204,7 @@
               <a href="#">Show all messages</a>
             </li>
 
-          </ul><!-- End Messages Dropdown Items -->
+          </ul><!-- End Messages Dropdown Items 
 
         </li><!-- End Messages Nav -->
 
@@ -279,9 +279,32 @@
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
 
       <li class="nav-item">
+        <a class="nav-link " href="{{ url_for('dashboard') }}">
+          <i class="bi bi-grid"></i>
+          <span>List of Members</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link " href="{{ url_for('dashboard') }}">
+          <i class="bi bi-grid"></i>
+          <span>Maintenance</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link " href="{{ url_for('dashboard') }}">
+          <i class="bi bi-grid"></i>
+          <span>Rent</span>
+        </a>
+      </li>
+      
+      <!-- End Dashboard Nav -->
+
+      <!--<li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -359,7 +382,7 @@
         </ul>
       </li><!-- End Components Nav -->
 
-      <li class="nav-item">
+      <!--<li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -387,7 +410,7 @@
         </ul>
       </li><!-- End Forms Nav -->
 
-      <li class="nav-item">
+      <!--<li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -405,7 +428,7 @@
         </ul>
       </li><!-- End Tables Nav -->
 
-      <li class="nav-item">
+      <!--<li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -428,7 +451,7 @@
         </ul>
       </li><!-- End Charts Nav -->
 
-      <li class="nav-item">
+      <!--<li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -451,49 +474,49 @@
         </ul>
       </li><!-- End Icons Nav -->
 
-      <li class="nav-heading">Pages</li>
+      <!--<li class="nav-heading">Pages</li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li><!-- End Profile Page Nav 
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
           <i class="bi bi-question-circle"></i>
           <span>F.A.Q</span>
         </a>
-      </li><!-- End F.A.Q Page Nav -->
+      </li><!-- End F.A.Q Page Nav 
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-contact.html">
           <i class="bi bi-envelope"></i>
           <span>Contact</span>
         </a>
-      </li><!-- End Contact Page Nav -->
+      </li><!-- End Contact Page Nav 
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">
           <i class="bi bi-card-list"></i>
           <span>Register</span>
         </a>
-      </li><!-- End Register Page Nav -->
+      </li><!-- End Register Page Nav 
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-login.html">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
-      </li><!-- End Login Page Nav -->
+      </li><!-- End Login Page Nav 
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-error-404.html">
           <i class="bi bi-dash-circle"></i>
           <span>Error 404</span>
         </a>
-      </li><!-- End Error 404 Page Nav -->
+      </li><!-- End Error 404 Page Nav 
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-blank.html">
@@ -526,7 +549,7 @@
           <div class="row">
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
+          <!--<div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
 
                 <div class="filter">
@@ -561,7 +584,7 @@
             </div><!-- End Sales Card -->
 
             <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
+            <!--<div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
 
                 <div class="filter">
@@ -596,7 +619,7 @@
             </div><!-- End Revenue Card -->
 
             <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
+            <!--<div class="col-xxl-4 col-xl-12">
 
               <div class="card info-card customers-card">
 
@@ -633,7 +656,7 @@
             </div><!-- End Customers Card -->
 
             <!-- Reports -->
-            <div class="col-12">
+            <!--<div class="col-12">
               <div class="card">
 
                 <div class="filter">
@@ -653,7 +676,7 @@
                   <h5 class="card-title">Reports <span>/Today</span></h5>
 
                   <!-- Line Chart -->
-                  <div id="reportsChart"></div>
+                  <!--<div id="reportsChart"></div>
 
                   <script>
                     document.addEventListener("DOMContentLoaded", () => {
@@ -707,7 +730,7 @@
                       }).render();
                     });
                   </script>
-                  <!-- End Line Chart -->
+                  <!-- End Line Chart 
 
                 </div>
 
@@ -715,7 +738,7 @@
             </div><!-- End Reports -->
 
             <!-- Recent Sales -->
-            <div class="col-12">
+          <!--<div class="col-12">
               <div class="card recent-sales overflow-auto">
 
                 <div class="filter">
@@ -789,7 +812,7 @@
             </div><!-- End Recent Sales -->
 
             <!-- Top Selling -->
-            <div class="col-12">
+            <!--<div class="col-12">
               <div class="card top-selling overflow-auto">
 
                 <div class="filter">
@@ -861,7 +884,7 @@
                 </div>
 
               </div>
-            </div><!-- End Top Selling -->
+            </div><!-- End Top Selling 
 
           </div>
         </div><!-- End Left side columns -->
@@ -943,7 +966,7 @@
           </div><!-- End Recent Activity -->
 
           <!-- Budget Report -->
-          <div class="card">
+          <!--<div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -1017,7 +1040,7 @@
           </div><!-- End Budget Report -->
 
           <!-- Website Traffic -->
-          <div class="card">
+          <!--<div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -1095,7 +1118,7 @@
           </div><!-- End Website Traffic -->
 
           <!-- News & Updates Traffic -->
-          <div class="card">
+          <!--<div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -1143,7 +1166,7 @@
                   <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
                 </div>
               </div>
-              <!-- End sidebar recent posts-->
+              <!-- End sidebar recent posts
 
             </div>
           </div><!-- End News & Updates -->
