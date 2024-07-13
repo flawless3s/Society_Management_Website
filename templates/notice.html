@@ -83,10 +83,8 @@
     </style>
 </head>
 <body>
-    <form action="/notice" method="post" onsubmit="return validateForm()">
+    <form action="{{url_for('secretary.issuenotice')}}" method="post" onsubmit="return validateForm()">
         <h2>NOTICE</h2>
-        <label for="notice_id">Notice ID:</label>
-        <input type="number" id="notice_id" name="notice_id"><br><br>
 
         <label for="notice_title">Notice Title:</label>
         <input type="text" id="notice_title" name="notice_title"><br><br>
@@ -94,8 +92,13 @@
         <label for="notice_content">Notice Content:</label>
         <textarea id="notice_content" name="notice_content" rows="10" cols="20"></textarea><br><br>
 
-        <label for="date"> Date:</label>
-        <input type="date" id="date" name="date"><br><br>
+        <label for="notice_type">Notice Type:</label>
+        <select id="notice_type" name="notice_type" required>
+            <option value="General">General</option>
+            <option value="Urgent">Urgent</option>
+            <option value="Reminder">Reminder</option>
+            <option value="Event">Event</option>
+        </select><br><br>
 
         <input type="submit" value="Submit"><br>
     </form>

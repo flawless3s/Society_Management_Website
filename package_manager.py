@@ -13,18 +13,15 @@ def package_manager():
         return redirect(url_for("login"))
     item = fetch_package_data()
     photo_link = session.get('photo')
-    if photo_link:
-        image_data = fetch_image_from_google_drive(photo_link) 
+    
+    image_data = fetch_image_from_google_drive(photo_link)
 
-        if image_data:
-            encoded_image = base64.b64encode(image_data).decode('utf-8')
-            data = user_data(encoded_image,session['name'])
-        else:
-            flash('Failed to fetch image data from Google Drive.')
-            return redirect(url_for('login')) 
+    # Encode image data to base64
+    if image_data:
+        encoded_image = base64.b64encode(image_data).decode('utf-8')
     else:
-        flash('Photo link not found in session.')
-        return redirect(url_for('login'))
+        encoded_image = None
+    data = user_data(encoded_image,session['name'])
      
     return render_template('package_manager_page.html',items = item,details = data)
 

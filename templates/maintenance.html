@@ -81,7 +81,7 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
+              <h6>{{ details.username }}</h6>
               <span>Web Designer</span>
             </li>
             <li>
@@ -448,7 +448,7 @@
                     {% if bill.payment_status %}
                         <td><span class="badge bg-success">Paid</span></td>
                     {% else %}
-                        <td><span class="badge bg-warning">Unpaid</span></td>
+                        <td><span class="badge bg-danger">Unpaid</span></td>
                     {% endif %}
                     <td>{{bill.payment_date or 'N/A'}}</td>
                   </tr>

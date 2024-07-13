@@ -1,0 +1,171 @@
+
+
+<div class="pagetitle">
+    <h1>Maintenance</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <!--<<li class="breadcrumb-item">Users</li>-->
+        <li class="breadcrumb-item active">Maintenance</li>
+      </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section profile">
+  <div class="col-xxl-4 col-md-6">
+    <div class="card info-card sales-card">
+      
+      <div class="card-body">
+        <h5 class="card-title">Issue bill</h5>
+  
+        <div class="d-flex align-items-center">
+          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+            
+          </div>
+          <div class="ps-3">
+            <h6></h6>
+            <a href="{{url_for('treasurer.maintenance_form')}}" target="_blank">
+              <button type="submit">Fill Form</button>
+            </a>
+  
+            <!--<span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
+  
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+    <div class="col-xl-8">
+        <div class="card" >
+            <div class="card-body pt-3">
+                <!--<ul class="nav nav-tabs nav-tabs-bordered">
+
+                    <li class="nav-item">
+                      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                    </li>
+      
+                    <li class="nav-item">
+                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Approve Member</button>
+                    </li>
+                </ul>-->
+
+                <div class="tab-content pt-2">
+                    <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                        <h5 class="card-title">Maintenance</h5>
+                        <div class="card-body">
+                            <div class="dropdown-container">
+                                <label for="months">Select Month:</label>
+                                <select id="months" name="months">
+                                    <option value="january">January</option>
+                                    <option value="february">February</option>
+                                    <option value="march">March</option>
+                                    <option value="april">April</option>
+                                    <option value="may">May</option>
+                                    <option value="june">June</option>
+                                    <option value="july">July</option>
+                                    <option value="august">August</option>
+                                    <option value="september">September</option>
+                                    <option value="october">October</option>
+                                    <option value="november">November</option>
+                                    <option value="december">December</option>
+                                </select>
+                        
+                                <label for="years">Select Year:</label>
+                                <select id="years" name="years">
+                                    <!-- Years from 2000 to 2035 -->
+                                    <script>
+                                        for (let year = 2000; year <= 2035; year++) {
+                                            document.write(`<option value="${year}">${year}</option>`);
+                                        }
+                                    </script>
+                                </select>
+                            </div>
+                            
+                            <table class="table table-bordered" >
+                                <thead>
+                                  <tr>
+                               
+                                    <th scope="col">Flat No</th>
+                                    <th scope="col">Member Name</th>
+                                    <th scope="col">Ph No.</th>
+                                    <th scope="col">Maintenance Amt</th>
+                                    <th scope="col">Month</th>
+                                    <th scope="col">Year</th>
+                                    <th scope="col">Payment Status</th>
+                                    <th scope="col">Payment Date</th>
+                                    <th scope="col">Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {%for member in members %}
+                                  <tr>
+                                    <th scope="row">{{member[13]}}</th>
+                                    <td>{{member[3]}}</td>
+                                    <td>{{member[5]}}</td>
+                                    <td>{{member[18]}}</td>
+                                    <td>{{member[19]}}</td>
+                                    <td>{{member[20]}}</td>
+                                    {% if member[21] %}
+                                      <td><span class="badge bg-success">Paid</span></td>
+                                    {% else %}
+                                      <td><span class="badge bg-danger">Unpaid</span></td>
+                                    {% endif %}
+                                    <td>{{member[22] or 'N/A'}}</td>
+                                    <td>
+                                      <button type="button" class="btn btn-danger rounded-pill" onclick="">Edit</button>
+                                    </td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                    <!--<div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                        <h5 class="card-title">Approve Member</h5>
+
+                        <table>
+                            <tr>
+                                <th scope="col">Flat number</th>
+                                <th scope="col">Member Name</th>
+                                <th scope="col">User Id</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <th scope="row"></th>
+                                <th scope="row"></th>
+                                <th scope="row"></th>
+                                <th scope="row"><button class="approve-button" onclick="handleApprove(this)">Approve</button>
+                                    <button class="reject-button" onclick="handleReject(this)">Reject</button></th>
+                            </tr>
+                        </table>
+
+                        
+                        
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+      
+        
+        
+
+        
+        
+       
+
+       
+
+       
+
+       
+
+
+  
+
+
