@@ -418,3 +418,150 @@ function handleDelete(button) {
   });
 }
 
+// Member Approve Button (Secretary)
+function handleApproveMember(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Approving item:', itemId);
+
+  $.post(`/secretary/approve/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightgreen';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightgreen';
+      });
+    } else {
+      alert(response.message);
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error approving:', textStatus, errorThrown);
+  });
+}
+
+function handleRejectMember(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Approving item:', itemId);
+
+  $.post(`/secretary/reject/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightcoral';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightcoral';
+      });
+    } else {
+      alert(response.message);
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error rejecting:', textStatus, errorThrown);
+  });
+}
+
+function handleDeleteMember(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Deleting item:', itemId);
+
+  $.post(`/secretary/delete/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightcoral';
+      row.querySelectorAll('th, td').forEach(cell => {
+        cell.style.backgroundColor = 'lightcoral';
+      });
+    } else {
+      alert(response.message); 
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error deleting:', textStatus, errorThrown);
+    alert(errorThrown)
+  });
+}
+
+// Notice editor
+$(document).ready(function() {
+  console.log("Hello")
+  jQuery(document).on('blur', 'td[contenteditable="true"]',function() {
+      var cell = $(this);
+      var column = cell.data('column');
+      var value = cell.text();
+      var id = cell.data('id');
+      console.log(value)
+      $.ajax({
+          url: '/secretary/update_notice',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ n_id: id, column: column, value: value }),
+          success: function(response) {
+              console.log(response);
+          },
+          error: function(error) {
+            console.error('Error:', error);
+        }
+      });
+  });
+});
+
+// Security Approve Button (Secretary)
+function handleApproveSecurity(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Approving security:', itemId);
+
+  $.post(`/secretary/approve_security/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightgreen';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightgreen';
+      });
+    } else {
+      alert(response.message);
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error approving:', textStatus, errorThrown);
+  });
+}
+
+function handleRejectSecurity(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Rejecting Security:', itemId);
+
+  $.post(`/secretary/reject_security/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightcoral';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightcoral';
+      });
+    } else {
+      alert(response.message);
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error rejecting:', textStatus, errorThrown);
+  });
+}
+
+function handleDeleteSecurity(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Deleting Security:', itemId);
+
+  $.post(`/secretary/delete_security/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightcoral';
+      row.querySelectorAll('th, td').forEach(cell => {
+        cell.style.backgroundColor = 'lightcoral';
+      });
+    } else {
+      alert(response.message); 
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error deleting:', textStatus, errorThrown);
+    alert(errorThrown)
+  });
+}

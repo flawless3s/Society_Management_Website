@@ -10,21 +10,18 @@ document_bp = Blueprint('document',__name__,url_prefix='/document')
 @document_bp.route('/',methods = ['GET'])
 def document():
     if 'user_id' not in session:
-      return  redirect (url_for('login'))
+        return  redirect (url_for('login'))
     photo_link = session.get('photo')
-    if photo_link:
-        image_data = fetch_image_from_google_drive(photo_link) 
 
-        if image_data:
-            encoded_image = base64.b64encode(image_data).decode('utf-8')
-            data = user_data(encoded_image,session['name'])
-            document = fetch_document_data()
-        else:
-            flash('Failed to fetch image data from Google Drive.')
-            return redirect(url_for('login')) 
+    image_data = fetch_image_from_google_drive(photo_link)
+
+    # Encode image data to base64
+    if image_data:
+        encoded_image = base64.b64encode(image_data).decode('utf-8')
     else:
-        flash('Photo link not found in session.')
-        return redirect(url_for('login'))
+        encoded_image = None
+    data = user_data(encoded_image,session['name'])
+    document = fetch_document_data()
     return render_template('document_page2.html',details = data, items = document)
 
 @document_bp.route('/document_form', methods=['POST','GET'])

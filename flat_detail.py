@@ -11,20 +11,15 @@ def flat_details():
     if 'user_id' not in session:
         return redirect(url_for('login'))
     photo_link = session.get('photo')
-    if photo_link:
-        image_data = fetch_image_from_google_drive(photo_link) 
+    image_data = fetch_image_from_google_drive(photo_link)
 
-        if image_data:
-            encoded_image = base64.b64encode(image_data).decode('utf-8')
-            data = user_data(encoded_image,session['name'])
-            flat_data = fetch_flat_data()
-            print(flat_data)
-        else:
-            flash('Failed to fetch image data from Google Drive.')
-            return redirect(url_for('login')) 
+    # Encode image data to base64
+    if image_data:
+        encoded_image = base64.b64encode(image_data).decode('utf-8')
     else:
-        flash('Photo link not found in session.')
-        return redirect(url_for('login'))
+        encoded_image = None
+    data = user_data(encoded_image,session['name'])
+    flat_data = fetch_flat_data()
     return render_template('flat_detail_page_(1).html',details = data,flat = flat_data)
 
 

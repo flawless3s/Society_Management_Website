@@ -1,0 +1,118 @@
+
+
+<div class="pagetitle">
+    <h1>List of Security</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <!--<<li class="breadcrumb-item">Users</li>-->
+        <li class="breadcrumb-item active">List of Security</li>
+      </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section profile">
+
+    <div class="col-xl-8">
+        <div class="card" >
+            <div class="card-body pt-3">
+                <ul class="nav nav-tabs nav-tabs-bordered">
+
+                    <li class="nav-item">
+                      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                    </li>
+      
+                    <li class="nav-item">
+                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Approve Security</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content pt-2">
+                    <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                        <h5 class="card-title">List of Security</h5>
+                        <div class="card-body">
+                            <table class="table table-bordered" >
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Security Id</th>
+                                    <th scope="col">Security Name</th>
+                                    <th scope="col">Phone No.</th>
+                                    <th scope="col">Duty</th>                                    
+                                    <th scope="col">Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {%for security in securities %}
+                                  <tr row-id="{{security[2]}}">
+                                    <th scope="row">{{security[0]}}</th>
+                                    <td>{{security[3]}}</td>
+                                    <td>{{security[5]}}</td>
+                                    <td>{{security[9]}}</td>
+                                    <td>
+                                      <button type="button" class="btn btn-danger rounded-pill" onclick="handleDeleteSecurity(this)">Delete</button>
+                                    </td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                        <h5 class="card-title">Approve Security</h5>
+
+                        <table class="table table-bordered">
+                          <tr>
+                              <th scope="col">Security Id</th>
+                              <th scope="col">Security Name</th>
+                              <th scope="col">Phone No.</th>
+                              <th scope="col">Duty</th>
+                              <th scope="col">Registration Date</th>
+                              <th scope="col">Action</th>
+                              <th data-type="date" data-format="YYYY/DD/MM">Approval Date</th>
+                          </tr>
+                          {% for security in approving_needed %}
+                          <tr row-id="{{security[2]}}">
+                            <td scope="row">{{security[2]}}</td>
+                            <td scope="row">{{security[3]}}</td>
+                            <td scope="row">{{security[5]}}</td>
+                            <td scope="row">{{security[9]}}</td>
+                              <td scope="row">{{security[8]}}</td>
+                              {%if not security[10]%}
+                                <td scope="row">
+                                  <div class="action-buttons">
+                                    <button class="approve-button" onclick="handleApproveSecurity(this)">Approve</button>
+                                    <button class="reject-button" onclick="handleRejectSecurity(this)">Reject</button>
+                                  </div>
+                                </td>
+                              {%else%}
+                                <td></td>
+                              {% endif %}
+                              <td>{{security[10] or 'N/A'}}</td>
+                          </tr>
+                          {%endfor%}
+                      </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+      
+        
+        
+
+        
+        
+       
+
+       
+
+       
+
+       
+
+
+  
+
+

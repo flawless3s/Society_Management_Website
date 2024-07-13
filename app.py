@@ -11,7 +11,9 @@ from maintenance import maintenance_bp
 from package_manager import package_bp
 from document_app import document_bp
 from flat_detail import flat_detail_bp
+from profile_page import profile_bp
 from admin import admin_bp
+from treasurer_app import treasurer_bp
 from data import user_data,fetch_package_permission,fetch_package_advance
 from datetime import timedelta
 import os
@@ -57,6 +59,8 @@ def login():
                         session['role'] = session_result[1]
                         session['name'] = session_result[3]
                         session['sid'] = session_result[0]
+                        session['approval'] = session_result[7]
+                        session['is_active'] = session_result[11]
                         direct_photo_link = session_result[6]
 
                         
@@ -83,38 +87,42 @@ def dashboard():
     if 'user_id' not in session:
         flash("Session has expired, Please login again.")
         return redirect(url_for('login'))
+    if not session['approval'] or not session['is_active']:
+        return render_template('waiting_page.html')
     
+
     role = session['role']
     user_name = session['name']
     photo_link = session.get('photo')
 
-    if photo_link:
-        image_data = fetch_image_from_google_drive(photo_link)
+    # if photo_link:
+    image_data = fetch_image_from_google_drive(photo_link)
 
-        # Encode image data to base64
-        if image_data:
-            encoded_image = base64.b64encode(image_data).decode('utf-8')
-            data = user_data(encoded_image,user_name)
-        else:
-            flash('Failed to fetch image data from Google Drive.')
-            return redirect(url_for('login'))
-
-        if role == 1:
-            return render_template('admin_dashboard.html', details = data,result='')
-        elif role == 2:
-            return render_template('Secretary_dashboard.html', details = data)
-        elif role == 3:
-            return render_template('Treasurer_dashboard.html', details = data)
-        elif role == 4:
-            # bill = fetch_maintenance_data()
-            return render_template('Member_dashboard.html', details = data)
-        elif role == 5:
-            permission,expected = fetch_package_permission(), fetch_package_advance()
-            print(expected)
-            return render_template('Security_Dashboard.html', details = data, package_permissions = permission, packages_expected = expected)
+    # Encode image data to base64
+    if image_data:
+        encoded_image = base64.b64encode(image_data).decode('utf-8')
     else:
-        flash('Photo link not found in session.')
-        return redirect(url_for('login'))
+        encoded_image = None
+    data = user_data(encoded_image,user_name)
+    #  else:
+    #     flash('Failed to fetch image data from Google Drive.')
+    #     return redirect(url_for('login'))
+
+    if role == 1:
+        return render_template('admin_dashboard.html', details = data,result='')
+    elif role == 2:
+        return render_template('Secretary_dashboard.html', details = data)
+    elif role == 3:
+        return render_template('Treasurer_dashboard.html', details = data)
+    elif role == 4:
+        # bill = fetch_maintenance_data()
+        return render_template('Member_dashboard.html', details = data)
+    elif role == 5:
+        permission,expected = fetch_package_permission(), fetch_package_advance()
+        return render_template('Security_Dashboard.html', details = data, package_permissions = permission, packages_expected = expected)
+    # else:
+    #     flash('Photo link not found in session.')
+    #     return redirect(url_for('login'))
 
 app.register_blueprint(signup_bp)  
 app.register_blueprint(secretary_bp)
@@ -125,6 +133,8 @@ app.register_blueprint(document_bp)
 app.register_blueprint(flat_detail_bp)
 app.register_blueprint(maintenance_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(profile_bp)
+app.register_blueprint(treasurer_bp)
 
 @app.route('/logout')
 def logout():

@@ -57,13 +57,13 @@
     </div><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
-      <!--<ul class="d-flex align-items-center">
+      <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
+        <!-- <li class="nav-item d-block d-lg-none">
           <a class="nav-link nav-icon search-bar-toggle " href="#">
             <i class="bi bi-search"></i>
           </a>
-        </li><!-- End Search Icon-->
+        </li>End Search Icon-->
 
         <!--<li class="nav-item dropdown">
 
@@ -138,14 +138,14 @@
 
           </ul><!-- End Notification Dropdown Items -->
 
-        </li><!-- End Notification Nav -->
+        <!--</li> End Notification Nav -->
 
         <!--<li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
             <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon 
+          </a> End Messages Icon 
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
@@ -204,9 +204,9 @@
               <a href="#">Show all messages</a>
             </li>
 
-          </ul><!-- End Messages Dropdown Items 
+          </ul><!-- End Messages Dropdown Items -->
 
-        </li><!-- End Messages Nav -->
+        </li> <!--End Messages Nav -->
 
         <li class="nav-item dropdown pe-3">
 
@@ -217,15 +217,15 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>{{ details.username }}</h6>
+              <span>Treasurer</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="#" onclick="loadPage('{{ url_for('profile.profile') }}')">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
@@ -282,25 +282,25 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link " href="{{ url_for('dashboard') }}">
+        <a class="nav-link collapsed" href="#" onclick="loadPage('{{ url_for('treasurer.list_members') }}')">
           <i class="bi bi-grid"></i>
           <span>List of Members</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link " href="{{ url_for('dashboard') }}">
+        <a class="nav-link collapsed" href="#" onclick="loadPage('{{ url_for('treasurer.maintenance_list') }}')">
           <i class="bi bi-grid"></i>
           <span>Maintenance</span>
         </a>
       </li>
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link " href="{{ url_for('dashboard') }}">
           <i class="bi bi-grid"></i>
           <span>Rent</span>
         </a>
-      </li>
+      </li> -->
       
       <!-- End Dashboard Nav -->
 
@@ -481,7 +481,7 @@
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
-      </li><!-- End Profile Page Nav 
+      </li>End Profile Page Nav 
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
@@ -536,7 +536,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{url_for('dashboard')}}">Home</a></li>
-          <li class="breadcrumb-item active">Hi! {{details.username}}</li>
+          <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -884,7 +884,7 @@
                 </div>
 
               </div>
-            </div><!-- End Top Selling 
+            </div><!-- End Top Selling--> 
 
           </div>
         </div><!-- End Left side columns -->
@@ -926,7 +926,7 @@
                   <div class="activity-content">
                     Voluptatem blanditiis blanditiis eveniet
                   </div>
-                </div><!-- End activity item-->
+                </div><!-- End activity item
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">2 hrs</div>
@@ -934,7 +934,7 @@
                   <div class="activity-content">
                     Voluptates corrupti molestias voluptatem
                   </div>
-                </div><!-- End activity item-->
+                </div><!-- End activity item
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">1 day</div>
@@ -942,7 +942,7 @@
                   <div class="activity-content">
                     Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
                   </div>
-                </div><!-- End activity item-->
+                </div><!-- End activity item
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">2 days</div>
@@ -950,7 +950,7 @@
                   <div class="activity-content">
                     Est sit eum reiciendis exercitationem
                   </div>
-                </div><!-- End activity item-->
+                </div><!-- End activity item
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">4 weeks</div>

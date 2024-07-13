@@ -12,17 +12,12 @@ def maintenance():
     if 'user_id' not in session:
         return redirect(url_for('login'))
     photo_link = session.get('photo')
-    if photo_link:
-        image_data = fetch_image_from_google_drive(photo_link) 
+    image_data = fetch_image_from_google_drive(photo_link)
 
-        if image_data:
-            encoded_image = base64.b64encode(image_data).decode('utf-8')
-            data = user_data(encoded_image,session['name'])
-            bill = fetch_maintenance_data()
-        else:
-            flash('Failed to fetch image data from Google Drive.')
-            return redirect(url_for('login')) 
+    if image_data:
+        encoded_image = base64.b64encode(image_data).decode('utf-8')
     else:
-        flash('Photo link not found in session.')
-        return redirect(url_for('login'))
+        encoded_image = None
+    data = user_data(encoded_image,session['name'])
+    bill = fetch_maintenance_data()
     return render_template('maintenance.html',details = data, maintenance_bills = bill)
