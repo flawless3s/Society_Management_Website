@@ -31,20 +31,26 @@ def delete_item(item_id):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        print("Hello")
-        cursor.execute('DELETE FROM Maintenance_Display WHERE uid = %s;', (item_id,))
-        cursor.execute('DELETE FROM Documents WHERE uid = %s;', (item_id,))
-        cursor.execute('DELETE FROM Flat_details WHERE uid = %s;', (item_id,))
-        cursor.execute('DELETE FROM Login WHERE uid = %s;', (item_id,))
-        cursor.execute('DELETE FROM Users WHERE uid = %s;', (item_id,))
+        
+        # List of tables to delete from
+        tables = ['Maintenance_Display', 'Documents', 'Flat_details', 'Login', 'Users']
+        
+        for table in tables:
+            try:
+                cursor.execute(f'DELETE FROM {table} WHERE uid = %s;', (item_id,))
+            except Error as e:
+                print(f"Error deleting from {table}: {str(e)}")
+                print(f"Data of user {item_id} has not been entered by treasurer in these tables")
+
         conn.commit()
         conn.close()
-        return jsonify({'status': 'success', 'message': f'User {item_id} deleted'})
+        return jsonify({'status': 'success', 'success': True, 'message': f'User {item_id} deleted'})
+    
     except Error as e:
         error_message = f"Error deleting item {item_id}: {str(e)}"
         print(error_message)
-        # Handle the error gracefully, you can render an error template or return a JSON response
         return jsonify({'status': 'error', 'message': error_message}), 500
+
     
 
 @secretary_bp.route('/approve/<item_id>', methods=['POST'])
@@ -109,7 +115,7 @@ def delete_security(item_id):
         cursor.execute('DELETE FROM Users WHERE uid = %s;', (item_id,))
         conn.commit()
         conn.close()
-        return jsonify({'status': 'success', 'message': f'User {item_id} deleted'})
+        return jsonify({'status': 'success','success': True, 'message': f'User {item_id} deleted'})
     except Error as e:
         error_message = f"Error deleting User {item_id}: {str(e)}"
         print(error_message)
@@ -154,7 +160,7 @@ def notice_editor():
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM Notice WHERE sid=%s;",(session['sid'],))
+        cursor.execute("SELECT * FROM Notice WHERE sid=%s order by post_date desc;",(session['sid'],))
         data = cursor.fetchall()
     except Error as e:
         flash(f"An error occurred while fetching secretary details: {e}", "danger")
@@ -180,6 +186,19 @@ def update_notice():
     connection.close()
 
     return jsonify({'status': 'success'})
+
+@secretary_bp.route('/delete_notice/<int:notice_id>', methods=['POST'])
+def delete_notice(notice_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM Notice WHERE n_id = %s;', (notice_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True,'message': f'User {notice_id} deleted'})
+    except Error as e:
+        return jsonify({'success': False}), 500  
+
 
 @secretary_bp.route('/issuenotice', methods=['POST','GET'])
 def issuenotice():

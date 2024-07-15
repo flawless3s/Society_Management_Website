@@ -63,9 +63,15 @@ def login():
                         session['is_active'] = session_result[11]
                         direct_photo_link = session_result[6]
 
-                        
-                       
                         session['photo'] = convert_drive_link(direct_photo_link)
+
+                        if session['role'] != 1: 
+                            session_db_query_2 = "SELECT s_name FROM Society_detail where sid = %s;"
+                            cursor.execute(session_db_query_2, (session['sid'],))
+                            session_result_2 = cursor.fetchone()
+                            session['s_name'] = session_result_2[0] 
+                        else:
+                            session['s_name'] = None                       
 
 
                         return redirect(url_for('dashboard'))
@@ -103,7 +109,7 @@ def dashboard():
         encoded_image = base64.b64encode(image_data).decode('utf-8')
     else:
         encoded_image = None
-    data = user_data(encoded_image,user_name)
+    data = user_data(encoded_image,user_name, session['s_name'])
     #  else:
     #     flash('Failed to fetch image data from Google Drive.')
     #     return redirect(url_for('login'))

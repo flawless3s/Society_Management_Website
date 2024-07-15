@@ -34,7 +34,7 @@ def profile():
 
     # Encode image data to base64
     encoded_image = base64.b64encode(image_data).decode('utf-8') if image_data else None
-    data = user_data(encoded_image, session['name'])
+    data = user_data(encoded_image, session['name'],session['s_name'])
 
     user = get_user()
     print(user)

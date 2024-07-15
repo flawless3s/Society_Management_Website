@@ -19,11 +19,11 @@
                 <ul class="nav nav-tabs nav-tabs-bordered">
 
                     <li class="nav-item">
-                      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Approved</button>
                     </li>
       
                     <li class="nav-item">
-                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Approve Security</button>
+                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Pending</button>
                     </li>
                 </ul>
 
@@ -44,13 +44,13 @@
                                 </thead>
                                 <tbody>
                                   {%for security in securities %}
-                                  <tr row-id="{{security[2]}}">
-                                    <th scope="row">{{security[0]}}</th>
+                                  <tr data-id="{{security[2]}}">
+                                    <td>{{security[2]}}</th>
                                     <td>{{security[3]}}</td>
                                     <td>{{security[5]}}</td>
                                     <td>{{security[9]}}</td>
                                     <td>
-                                      <button type="button" class="btn btn-danger rounded-pill" onclick="handleDeleteSecurity(this)">Delete</button>
+                                      <button type="button" class="btn btn-danger rounded-pill sdelete-btn" data-id="{{security[2]}}" >Delete</button>
                                     </td>
                                   </tr>
                                   {% endfor %}

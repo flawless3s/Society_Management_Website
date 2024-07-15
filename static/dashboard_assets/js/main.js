@@ -459,36 +459,72 @@ function handleRejectMember(button) {
   });
 }
 
-function handleDeleteMember(button) {
-  const row = button.closest('tr');
-  const itemId = row.getAttribute('row-id');
-  console.log('Deleting item:', itemId);
+// function handleDeleteMember(button) {
+//   const row = button.closest('tr');
+//   const itemId = row.getAttribute('row-id');
+//   console.log('Deleting item:', itemId);
 
-  $.post(`/secretary/delete/${itemId}`, function(response) {
-    if (response.status === 'success') {
-      row.style.backgroundColor = 'lightcoral';
-      row.querySelectorAll('th, td').forEach(cell => {
-        cell.style.backgroundColor = 'lightcoral';
-      });
-    } else {
-      alert(response.message); 
-      console.error(response.message);
-    }
-  }).fail(function(jqXHR, textStatus, errorThrown) {
-    console.error('Error deleting:', textStatus, errorThrown);
-    alert(errorThrown)
+//   $.post(`/secretary/delete/${itemId}`, function(response) {
+//     if (response.status === 'success') {
+//       row.style.backgroundColor = 'lightcoral';
+//       row.querySelectorAll('th, td').forEach(cell => {
+//         cell.style.backgroundColor = 'lightcoral';
+//       });
+//     } else {
+//       alert(response.message); 
+//       console.error(response.message);
+//     }
+//   }).fail(function(jqXHR, textStatus, errorThrown) {
+//     console.error('Error deleting:', textStatus, errorThrown);
+//     alert(errorThrown)
+//   });
+// }
+
+// Member Delete button (Secretary)
+$(document).ready(function() {
+  $(document).on('click', '.mdelete-btn', function() {
+      if (confirm("Are you sure you want to delete this Member?")) {
+          var memberId = $(this).data('id');
+          var row = $(this).closest('tr');
+
+          $.ajax({
+              url: '/secretary/delete/' + memberId,
+              type: 'POST',
+              success: function(response) {
+                  if (response.success) {
+                      row.remove();
+                  } else {
+                      alert('Failed to delete the member.');
+                  }
+              },
+              error: function() {
+                  alert('Error occurred while trying to delete the member.');
+              }
+          });
+      }
   });
-}
+});
 
 // Notice editor
-$(document).ready(function() {
-  console.log("Hello")
-  jQuery(document).on('blur', 'td[contenteditable="true"]',function() {
+$(document).ready(function() {  
+  // Handling blur event for editable cells
+  jQuery(document).on('blur', 'td[contenteditable="true"]', function() {
       var cell = $(this);
       var column = cell.data('column');
-      var value = cell.text();
+      var value;
+      
+      // Check if it's a dropdown select
+      if (cell.find('select').length > 0) {
+          value = cell.find('select').val();
+      } else {
+          value = cell.text();
+      }
+      
       var id = cell.data('id');
-      console.log(value)
+      
+      console.log(value);
+      
+      // AJAX request
       $.ajax({
           url: '/secretary/update_notice',
           method: 'POST',
@@ -498,11 +534,37 @@ $(document).ready(function() {
               console.log(response);
           },
           error: function(error) {
-            console.error('Error:', error);
-        }
+              console.error('Error:', error);
+          }
       });
   });
 });
+
+// Notice Deleting
+$(document).ready(function() {
+  $(document).on('click', '.delete-btn', function() {
+      if (confirm("Are you sure you want to delete this Notice?")) {
+          var noticeId = $(this).data('id');
+          var row = $(this).closest('tr');
+
+          $.ajax({
+              url: '/secretary/delete_notice/' + noticeId,
+              type: 'POST',
+              success: function(response) {
+                  if (response.success) {
+                      row.remove();
+                  } else {
+                      alert('Failed to delete the notice.');
+                  }
+              },
+              error: function() {
+                  alert('Error occurred while trying to delete the notice.');
+              }
+          });
+      }
+  });
+});
+
 
 // Security Approve Button (Secretary)
 function handleApproveSecurity(button) {
@@ -524,7 +586,7 @@ function handleApproveSecurity(button) {
     console.error('Error approving:', textStatus, errorThrown);
   });
 }
-
+//  Security Reject Button (Secretary)
 function handleRejectSecurity(button) {
   const row = button.closest('tr');
   const itemId = row.getAttribute('row-id');
@@ -545,23 +607,47 @@ function handleRejectSecurity(button) {
   });
 }
 
-function handleDeleteSecurity(button) {
-  const row = button.closest('tr');
-  const itemId = row.getAttribute('row-id');
-  console.log('Deleting Security:', itemId);
+// function handleDeleteSecurity(button) {
+//   const row = button.closest('tr');
+//   const itemId = row.getAttribute('row-id');
+//   console.log('Deleting Security:', itemId);
 
-  $.post(`/secretary/delete_security/${itemId}`, function(response) {
-    if (response.status === 'success') {
-      row.style.backgroundColor = 'lightcoral';
-      row.querySelectorAll('th, td').forEach(cell => {
-        cell.style.backgroundColor = 'lightcoral';
-      });
-    } else {
-      alert(response.message); 
-      console.error(response.message);
-    }
-  }).fail(function(jqXHR, textStatus, errorThrown) {
-    console.error('Error deleting:', textStatus, errorThrown);
-    alert(errorThrown)
+//   $.post(`/secretary/delete_security/${itemId}`, function(response) {
+//     if (response.status === 'success') {
+//       row.style.backgroundColor = 'lightcoral';
+//       row.querySelectorAll('th, td').forEach(cell => {
+//         cell.style.backgroundColor = 'lightcoral';
+//       });
+//     } else {
+//       alert(response.message); 
+//       console.error(response.message);
+//     }
+//   }).fail(function(jqXHR, textStatus, errorThrown) {
+//     console.error('Error deleting:', textStatus, errorThrown);
+//     alert(errorThrown)
+//   });
+// }
+
+//  Security Delete Button (Secretary)
+$(document).ready(function() {
+  $(document).on('click', '.sdelete-btn', function() {
+      if (confirm("Are you sure you want to delete this particular Security Personnel?")) {
+          var securityId = $(this).data('id');
+          var row = $(this).closest('tr');
+          $.ajax({
+              url: '/secretary/delete_security/' + securityId,
+              type: 'POST',
+              success: function(response) {
+                  if (response.success) {
+                      row.remove();
+                  } else {
+                      alert('Failed to delete this Personnel.');
+                  }
+              },
+              error: function() {
+                  alert('Error occurred while trying to delete this Security Personnel.');
+              }
+          });
+      }
   });
-}
+});

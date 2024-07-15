@@ -3,9 +3,10 @@ from database_connection import get_connection
 from flask import session
 from datetime_checker import check_time
 class user_data:
-    def __init__(self, image, username):
+    def __init__(self, image, username, society_name):
         self.image = image
         self.username = username
+        self.society_name = society_name
 
 
 
