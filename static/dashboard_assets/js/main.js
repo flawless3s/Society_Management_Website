@@ -392,31 +392,65 @@ function loadPage(url) {
       .then(response => response.text())
       .then(html => {
           document.getElementById('main').innerHTML = html;
+          // loadAdditionalJS();
       })
       .catch(error => console.error('Error loading page:', error));
 }
+// function loadAdditionalJS() {
+//   // Example of loading additional JS after content is loaded
+//   const script = document.createElement('script');
+//   script.src = '/static/dashboard_assets/js/main.js';  // Path to your specific JS file
+//   document.body.appendChild(script);
+// }
 
 // Society Delete Button
-function handleDelete(button) {
-  const row = button.closest('tr');
-  const itemId = row.getAttribute('row-id');
-  console.log('Deleting item:', itemId);
+$(document).ready(function() {
+  $(document).on('click', '.sodelete-btn', function() {
+      if (confirm("Are you sure you want to delete this Society?")) {
+          var SocietyId = $(this).data('id');
+          var row = $(this).closest('tr');
 
-  $.post(`/admin/delete/${itemId}`, function(response) {
-    if (response.status === 'success') {
-      row.style.backgroundColor = 'lightcoral';
-      row.querySelectorAll('td').forEach(td => {
-        td.style.backgroundColor = 'lightcoral';
-      });
-    } else {
-      alert(response.message); // Display error message in alert
-      console.error(response.message);
-    }
-  }).fail(function(jqXHR, textStatus, errorThrown) {
-    console.error('Error deleting:', textStatus, errorThrown);
-    alert('Society is Linked with member so it cannot be deleted'); // Display generic error message
+          $.ajax({
+              url: '/admin/delete/' + SocietyId,
+              type: 'POST',
+              success: function(response) {
+                  if (response.success) {
+                      row.remove();
+                  } else {
+                      alert('Failed to delete Society.');
+                  }
+              },
+              error: function() {
+                alert('Society is Linked with member so it cannot be deleted');;
+              }
+          });
+      }
   });
-}
+});
+// function handleDelete(button) {
+//   if(confirm("Are you sure you want to delete this Society?")){
+//     const row = button.closest('tr');
+//     const itemId = row.getAttribute('row-id');
+//     console.log('Deleting item:', itemId);
+
+//     $.post(`/admin/delete/${itemId}`, function(response) {
+//       if (response.status === 'success') {
+//         row.style.backgroundColor = 'lightcoral';
+//         row.querySelectorAll('td').forEach(td => {
+//           td.style.backgroundColor = 'lightcoral';
+//         });
+//       } else {
+//         alert(response.message); // Display error message in alert
+//         console.error(response.message);
+//       }
+//     }).fail(function(jqXHR, textStatus, errorThrown) {
+//       console.error('Error deleting:', textStatus, errorThrown);
+//       alert('Society is Linked with member so it cannot be deleted'); // Display generic error message
+//     });
+//   }
+// }
+
+
 
 // Member Approve Button (Secretary)
 function handleApproveMember(button) {
@@ -607,26 +641,6 @@ function handleRejectSecurity(button) {
   });
 }
 
-// function handleDeleteSecurity(button) {
-//   const row = button.closest('tr');
-//   const itemId = row.getAttribute('row-id');
-//   console.log('Deleting Security:', itemId);
-
-//   $.post(`/secretary/delete_security/${itemId}`, function(response) {
-//     if (response.status === 'success') {
-//       row.style.backgroundColor = 'lightcoral';
-//       row.querySelectorAll('th, td').forEach(cell => {
-//         cell.style.backgroundColor = 'lightcoral';
-//       });
-//     } else {
-//       alert(response.message); 
-//       console.error(response.message);
-//     }
-//   }).fail(function(jqXHR, textStatus, errorThrown) {
-//     console.error('Error deleting:', textStatus, errorThrown);
-//     alert(errorThrown)
-//   });
-// }
 
 //  Security Delete Button (Secretary)
 $(document).ready(function() {
@@ -650,4 +664,151 @@ $(document).ready(function() {
           });
       }
   });
+});
+
+//Secretary Delete Button (Admin) 
+$(document).ready(function() {
+  $(document).on('click', '.secdelete-btn', function() {
+      if (confirm("Are you sure you want to delete this particular Secretary?")) {
+          var secretaryId = $(this).data('id');
+          var row = $(this).closest('tr');
+          $.ajax({
+              url: '/admin/delete_security/' + secretaryId,
+              type: 'POST',
+              success: function(response) {
+                  if (response.success) {
+                      row.remove();
+                  } else {
+                      alert('Failed to delete this Secretary.');
+                  }
+              },
+              error: function() {
+                  alert('Error occurred while trying to delete this Secretary.');
+              }
+          });
+      }
+  });
+});
+// Secretary Approve Button (Admin)
+function handleApproveSecretary(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Approving secretary:', itemId);
+
+  $.post(`/admin/approve_secretary/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightgreen';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightgreen';
+      });
+    } else {
+      alert(response.message);
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error approving:', textStatus, errorThrown);
+  });
+}
+
+function handleRejectSecretary(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Rejecting Secretary:', itemId);
+
+  $.post(`/admin/reject_secretary/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightcoral';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightcoral';
+      });
+    } else {
+      alert(response.message);
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error rejecting:', textStatus, errorThrown);
+  });
+}
+
+$(document).ready(function() {
+  $(document).on('submit','#profileForm', function(event) {
+      event.preventDefault();
+
+      var phoneNo = $('#phone_no').val();
+      var email = $('#email').val();
+      var phonePattern = /^\d{10}$/;
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // Perform client-side validation
+      if (!phonePattern.test(phoneNo)) {
+          alert('Phone number must be exactly 10 digits long.');
+          return; // Prevent form submission
+      }
+
+      if (!emailPattern.test(email)) {
+          alert('Please enter a valid email address.');
+          return; // Prevent form submission
+      }
+
+      // Proceed with AJAX form submission if all validations pass
+      var formData = {
+          uid: $('#uid').val(),
+      };
+
+      $.ajax({
+          type: 'POST',
+          url: '/profile/check_value',
+          contentType: 'application/json',
+          data: JSON.stringify({ values: formData }),
+          success: function(response) {
+              console.log(response);
+              $('#status-uid').text(response.uidExists[0] ? 'Username already exists' : '');
+
+              if (!response.uidExists[0]) {
+                  // Now submit the form using plain JavaScript
+                  document.getElementById('profileForm').submit();
+              }
+          }
+      });
+  });
+
+});
+
+// Password checking
+$(document).ready(function() {
+  $(document).on('submit','#passwordForm', function(event) {
+      event.preventDefault();
+
+      var newpassword = $('#newPassword').val();
+      var renewpassword = $('#renewPassword').val();
+
+
+      // Perform client-side validation
+      if (newpassword!=renewpassword) {
+          alert("New passwords do not match");
+          return; // Prevent form submission
+      }
+
+      // Proceed with AJAX form submission if all validations pass
+      var formData = {
+          password: $('#currentPassword').val(),
+      };
+
+      $.ajax({
+          type: 'POST',
+          url: '/profile/check_password',
+          contentType: 'application/json',
+          data: JSON.stringify({ values: formData }),
+          success: function(response) {
+              console.log(response);
+              $('#status-password').text(response.passwordEqual[0] ? '' : 'Current Password is incorrect');
+
+              if (response.passwordEqual[0]) {
+                  // Now submit the form using plain JavaScript
+                  document.getElementById('passwordForm').submit();
+              }
+          }
+      });
+  });
+
 });

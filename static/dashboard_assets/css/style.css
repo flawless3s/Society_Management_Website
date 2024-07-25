@@ -296,7 +296,11 @@ td[contenteditable="true"] {
   height: 50px;
 }
 /* ----------------------------- */
-
+/* Profile Page span */
+.span_style{
+  color: red;
+  font-size: 14px;
+}
 
 .card-img-overlay {
   background-color: rgba(255, 255, 255, 0.6);

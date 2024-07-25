@@ -47,7 +47,7 @@
                                 <tbody>
                                   {%for member in members %}
                                   <tr data-id="{{member[2]}}">
-                                    <th scope="row">{{member[28]}}</th>
+                                    <td>{{member[29]}}</td>
                                     <td>{{member[3]}}</td>
                                     <td>{{member[2]}}</td>
                                     <td>{{member[5]}}</td>
@@ -80,26 +80,28 @@
                               <th scope="col">Phone Number</th>
                               <th scope="col">Registration Date</th>
                               <th scope="col">Action</th>
-                              <th data-type="date" data-format="YYYY/DD/MM">Approval Date</th>
+                              <th data-type="date" data-format="YYYY/DD/MM">Action Date</th>
                           </tr>
                           {% for member in approving_needed %}
                           <tr row-id="{{member[2]}}">
-                              <td scope="row">{{member[28]}}</td>
+                              <td scope="row">{{member[29]}}</td>
                               <td scope="row">{{member[3]}}</td>
                               <td scope="row">{{member[2]}}</td>
                               <td scope="row">{{member[5]}}</td>
                               <td scope="row">{{member[8]}}</td>
-                              {%if not member[10]%}
+                              {% if member[10]==0 %}
+                                <td>Rejected</td>
+                              {%elif member[7]%}
+                                <td>Approved</td>
+                              {%else%}
                                 <td scope="row">
                                   <div class="action-buttons">
-                                    <button class="approve-button" onclick="handleApproveMember(this)">Approve</button>
-                                    <button class="reject-button" onclick="handleRejectMember(this)">Reject</button>
+                                    <button class="approve-button" onclick="handleApproveSecretary(this)">Approve</button>
+                                    <button class="reject-button" onclick="handleRejectSecretary(this)">Reject</button>
                                   </div>
                                 </td>
-                              {%else%}
-                                <td></td>
                               {% endif %}
-                              <td>{{member[10] or 'N/A'}}</td>
+                              <td>{{member[9] or 'N/A'}}</td>
                           </tr>
                           {%endfor%}
                       </table>

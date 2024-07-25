@@ -11,7 +11,7 @@ def notice():
     notices = []
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Notice ORDER BY post_date DESC LIMIT 5")
+    cursor.execute("SELECT * FROM Notice where sid = %s ORDER BY post_date DESC LIMIT 5",(session['sid'],))
     notices = cursor.fetchall()
     cursor.close()
     conn.close()

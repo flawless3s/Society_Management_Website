@@ -1,9 +1,7 @@
-from flask import Flask, request, render_template, Blueprint,redirect, session, url_for, jsonify, flash
-from mysql.connector import connect, Error
+from flask import request, render_template, Blueprint,redirect, session, url_for, jsonify, flash
+from mysql.connector import Error
 from database_connection import get_connection
-from fetching_image import fetch_image_from_google_drive
-from data import fetch_package_data,user_data
-import base64
+from data import fetch_package_data
 
 package_bp = Blueprint('package_manager',__name__,url_prefix='/package_manager')
 
@@ -11,19 +9,8 @@ package_bp = Blueprint('package_manager',__name__,url_prefix='/package_manager')
 def package_manager():
     if 'user_id' not in session:
         return redirect(url_for("login"))
-    item = fetch_package_data()
-    photo_link = session.get('photo')
-    
-    image_data = fetch_image_from_google_drive(photo_link)
-
-    # Encode image data to base64
-    if image_data:
-        encoded_image = base64.b64encode(image_data).decode('utf-8')
-    else:
-        encoded_image = None
-    data = user_data(encoded_image,session['name'])
-     
-    return render_template('package_manager_page.html',items = item,details = data)
+    item = fetch_package_data()     
+    return render_template('package_manager_page.html',items = item)
 
 
 
@@ -33,25 +20,24 @@ def advancepermission():
         return redirect(url_for("login"))
 
     if request.method == 'POST':
-        print("Hello")
-        Flat_No = request.form['flat_no']
         Package_Description = request.form['package_desc']
         Date_of_Arrival = request.form['date_arrival']
         Time_of_Arrival = request.form['time_arrival']
         Permission = 1 if request.form['permission'].lower() == 'true' else 0
-        print("Received data:", Flat_No, Package_Description,Date_of_Arrival,Time_of_Arrival,Permission)  # Debugging line
+        # print("Received data:", Package_Description,Date_of_Arrival,Time_of_Arrival,Permission)  # Debugging line
         
         connection = get_connection()
         
         if connection:
             try:
                 package_insert_query = "INSERT INTO MyGate_Resident (Sid, Flat_No, Package_Desc, Date_Arrival, Time_Arrival, resident_permission) VALUES (%s, %s, %s, %s, %s, %s);"
-                values = (session['sid'],Flat_No, Package_Description, Date_of_Arrival, Time_of_Arrival, Permission)
+                values = (session['sid'],session['flat_no'], Package_Description, Date_of_Arrival, Time_of_Arrival, Permission)
                 cursor = connection.cursor()  # Corrected this line
                 cursor.execute(package_insert_query, values)
                 connection.commit()
                 cursor.close()  
-                return redirect(url_for("dashboard"))
+                result='Message Notified'
+                return redirect(url_for("dashboard",result=result))
 
 
             except Error as e:
@@ -97,14 +83,11 @@ def permissionrequired():
         return redirect(url_for("login"))
 
     if request.method == 'POST':
-        print("Hello")
         Flat_No = request.form['flat_no']
         Package_Description = request.form['package_desc']
         Date_of_Arrival = request.form['date_arrival']
         Time_of_Arrival = request.form['time_arrival']
 
-        print("Received data:", Flat_No, Package_Description,Date_of_Arrival,Time_of_Arrival)  # Debugging line
-        
         connection = get_connection()
         
         if connection:
@@ -114,8 +97,9 @@ def permissionrequired():
                 cursor = connection.cursor()  # Corrected this line
                 cursor.execute(package_insert_query, values)
                 connection.commit()
-                cursor.close()  
-                return redirect(url_for("dashboard"))
+                cursor.close() 
+                result = "Member Informed" 
+                return redirect(url_for("dashboard",result=result))
 
 
             except Error as e:
@@ -127,7 +111,24 @@ def permissionrequired():
 
     return render_template('permissionrequired.html')
 
+@package_bp.route('/check_value', methods=['POST'])
+def check_value():
+    data = request.get_json()
+    flat_no = data['values']['flat_no']
+    connection = get_connection()
+    cursor = connection.cursor()
+    try:
+        flat_no_query = "Select COUNT(1) from Flat_details where flat_no=%s and sid =%s;"
+        cursor.execute(flat_no_query,(flat_no,session['sid']))
+        flat_exists = cursor.fetchone()
 
+
+    except Error as e:
+        print(f"An error occurred while checking details: {e}", "danger")
+     
+    return jsonify({
+        'flat_noExists': flat_exists,
+    })
 
     
 

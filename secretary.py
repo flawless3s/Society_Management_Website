@@ -12,10 +12,10 @@ def member():
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM Users as u, Society_Detail as s, Flat_Details as f WHERE u.role_id in (3,4) AND u.sid = s.sid and u.uid = f.uid and u.admin_approval = 1;")
+        cursor.execute("SELECT * FROM Users as u, Society_Detail as s, Flat_Details as f WHERE u.role_id in (3,4) AND u.sid = s.sid and u.sid=%s and u.uid = f.uid and u.admin_approval = 1;",(session['sid'],))
         data = cursor.fetchall()
         
-        cursor.execute("SELECT * FROM Users as u, Society_Detail as s, Flat_Details as f WHERE u.role_id in (3,4) AND u.sid = s.sid and u.uid = f.uid order by registration_date desc;")
+        cursor.execute("SELECT * FROM Users as u, Society_Detail as s, Flat_Details as f WHERE u.role_id in (3,4) AND u.sid = s.sid and u.sid=%s and u.uid = f.uid order by registration_date desc;",(session['sid'],))
         data2 = cursor.fetchall()
     except Error as e:
         flash(f"An error occurred while fetching secretary details: {e}", "danger")
@@ -58,7 +58,7 @@ def approve_item(item_id):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        print("Hello")
+        # print("Hello")
         cursor.execute('UPDATE Users set admin_approval = 1, approval_date = NOW() where uid = %s', (item_id,))
         conn.commit()
         conn.close()
@@ -73,7 +73,7 @@ def reject_item(item_id):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        print("Hello")
+        # print("Hello")
         cursor.execute('UPDATE Users set admin_approval = 0 and approval_date = NULL where uid = %s', (item_id,))
         conn.commit()
         conn.close()
@@ -91,10 +91,10 @@ def security():
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM Users as u, Society_Detail as s WHERE u.role_id = 5 AND u.sid = s.sid and admin_approval = 1")
+        cursor.execute("SELECT * FROM Users as u, Society_Detail as s WHERE u.role_id = 5 AND u.sid = s.sid and u.sid=%s and admin_approval = 1",(session['sid'],))
         data = cursor.fetchall()
 
-        cursor.execute("SELECT * FROM Users as u, Society_Detail as s WHERE u.role_id = 5 AND u.sid = s.sid order by registration_date desc;")
+        cursor.execute("SELECT * FROM Users as u, Society_Detail as s WHERE u.role_id = 5 AND u.sid = s.sid and u.sid=%s order by registration_date desc;",(session['sid'],))
         data2 = cursor.fetchall()
     except Error as e:
         flash(f"An error occurred while fetching secretary details: {e}", "danger")
@@ -110,7 +110,7 @@ def delete_security(item_id):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        print("Hello")
+        # print("Hello")
         cursor.execute('DELETE FROM Login WHERE uid = %s;', (item_id,))
         cursor.execute('DELETE FROM Users WHERE uid = %s;', (item_id,))
         conn.commit()
@@ -127,7 +127,7 @@ def approve_security(item_id):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        print("Hello")
+        # print("Hello")
         cursor.execute('UPDATE Users set admin_approval = 1, approval_date = NOW() where uid = %s', (item_id,))
         conn.commit()
         conn.close()
@@ -142,7 +142,7 @@ def reject_security(item_id):
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        print("Hello")
+        # print("Hello")
         cursor.execute('UPDATE Users set admin_approval = 0 and approval_date = NULL where uid = %s', (item_id,))
         conn.commit()
         conn.close()
@@ -177,7 +177,7 @@ def update_notice():
     n_id = data['n_id']
     column = data['column']
     value = data['value']
-    print(value)
+    # print(value)
     connection = get_connection()
     with connection.cursor() as cursor:
         sql = f"UPDATE Notice SET {column} = %s WHERE n_id = %s"
@@ -208,7 +208,7 @@ def issuenotice():
         title = request.form['notice_title']
         content = request.form['notice_content']
         type = request.form['notice_type']
-        print(title)
+        # print(title)
         try:
             connection = get_connection()
             cursor = connection.cursor()
