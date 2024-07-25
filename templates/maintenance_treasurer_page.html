@@ -24,7 +24,7 @@
           </div>
           <div class="ps-3">
             <h6></h6>
-            <a href="{{url_for('treasurer.maintenance_form')}}" target="_blank">
+            <a href="{{url_for('treasurer.maintenance_form')}}" target="_parent">
               <button type="submit">Fill Form</button>
             </a>
   
@@ -55,33 +55,6 @@
 
                         <h5 class="card-title">Maintenance</h5>
                         <div class="card-body">
-                            <div class="dropdown-container">
-                                <label for="months">Select Month:</label>
-                                <select id="months" name="months">
-                                    <option value="january">January</option>
-                                    <option value="february">February</option>
-                                    <option value="march">March</option>
-                                    <option value="april">April</option>
-                                    <option value="may">May</option>
-                                    <option value="june">June</option>
-                                    <option value="july">July</option>
-                                    <option value="august">August</option>
-                                    <option value="september">September</option>
-                                    <option value="october">October</option>
-                                    <option value="november">November</option>
-                                    <option value="december">December</option>
-                                </select>
-                        
-                                <label for="years">Select Year:</label>
-                                <select id="years" name="years">
-                                    <!-- Years from 2000 to 2035 -->
-                                    <script>
-                                        for (let year = 2000; year <= 2035; year++) {
-                                            document.write(`<option value="${year}">${year}</option>`);
-                                        }
-                                    </script>
-                                </select>
-                            </div>
                             
                             <table class="table table-bordered" >
                                 <thead>
@@ -101,20 +74,20 @@
                                 <tbody>
                                   {%for member in members %}
                                   <tr>
-                                    <th scope="row">{{member[13]}}</th>
+                                    <th scope="row">{{member[14]}}</th>
                                     <td>{{member[3]}}</td>
                                     <td>{{member[5]}}</td>
-                                    <td>{{member[18]}}</td>
                                     <td>{{member[19]}}</td>
                                     <td>{{member[20]}}</td>
-                                    {% if member[21] %}
+                                    <td>{{member[21]}}</td>
+                                    {% if member[22] %}
                                       <td><span class="badge bg-success">Paid</span></td>
                                     {% else %}
                                       <td><span class="badge bg-danger">Unpaid</span></td>
                                     {% endif %}
-                                    <td>{{member[22] or 'N/A'}}</td>
+                                    <td>{{member[23] or 'N/A'}}</td>
                                     <td>
-                                      <button type="button" class="btn btn-danger rounded-pill" onclick="">Edit</button>
+                                      <a href="{{url_for('treasurer.edit_row', row_id = member[16])}}"><button type="button" class="btn btn-info rounded-pill" >Edit</button></a>
                                     </td>
                                   </tr>
                                   {% endfor %}

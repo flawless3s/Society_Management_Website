@@ -11,18 +11,9 @@ document_bp = Blueprint('document',__name__,url_prefix='/document')
 def document():
     if 'user_id' not in session:
         return  redirect (url_for('login'))
-    photo_link = session.get('photo')
 
-    image_data = fetch_image_from_google_drive(photo_link)
-
-    # Encode image data to base64
-    if image_data:
-        encoded_image = base64.b64encode(image_data).decode('utf-8')
-    else:
-        encoded_image = None
-    data = user_data(encoded_image,session['name'])
     document = fetch_document_data()
-    return render_template('document_page2.html',details = data, items = document)
+    return render_template('document_page2.html', items = document)
 
 @document_bp.route('/document_form', methods=['POST','GET'])
 def document_form():
@@ -31,7 +22,7 @@ def document_form():
         Document_Name = request.form['doc_name']
         file = request.files['file']
 
-        print("Received data:", Document_Name, file.filename)  # Debugging line
+        # print("Received data:", Document_Name, file.filename)  # Debugging line
         if file:
             file_data = file.read()
             # Convert file data to base64
@@ -46,8 +37,9 @@ def document_form():
                     cursor = connection.cursor()  # Corrected this line
                     cursor.execute(package_insert_query, values)
                     connection.commit()
-                    cursor.close() 
-                    return redirect(url_for("document.document"))
+                    cursor.close()
+                    result = "File Uploaded Successfully"
+                    return redirect(url_for("dashboard",result=result))
 
 
                 except Error as e:

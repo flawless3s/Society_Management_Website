@@ -1,8 +1,6 @@
 from flask import Flask, request, render_template, Blueprint, session, url_for, redirect, flash
 from mysql.connector import connect, Error
-from fetching_image import fetch_image_from_google_drive
-from data import user_data, fetch_maintenance_data
-import base64
+from database_connection import get_connection
 
 maintenance_bp = Blueprint('maintenance',__name__,url_prefix='/maintenance')
 
@@ -11,13 +9,18 @@ maintenance_bp = Blueprint('maintenance',__name__,url_prefix='/maintenance')
 def maintenance():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    photo_link = session.get('photo')
-    image_data = fetch_image_from_google_drive(photo_link)
+    connection = get_connection()
+    if connection:
+        try:
+            Maintenance_query = "Select * from maintenance_display where uid=%s ;"
+            value = (session['user_id'],)
+            # print(session['user_id'])
 
-    if image_data:
-        encoded_image = base64.b64encode(image_data).decode('utf-8')
+            with connection.cursor() as cursor:
+                cursor.execute(Maintenance_query,value)
+                result = cursor.fetchall()
+        except Error as e:
+            return [('Could not fetch data')]        
     else:
-        encoded_image = None
-    data = user_data(encoded_image,session['name'])
-    bill = fetch_maintenance_data()
-    return render_template('maintenance.html',details = data, maintenance_bills = bill)
+        print('Database connection failed')
+    return render_template('maintenance.html', maintenance_bills = result)

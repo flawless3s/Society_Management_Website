@@ -1,0 +1,61 @@
+
+
+    <div class="pagetitle">
+      <h1>Flat Details</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          
+          <li class="breadcrumb-item active">Flat Details</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  
+                  
+
+                  <h5 class="card-title">Flat Details</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><b>Flat No:</b></div>
+                    <div class="col-lg-9 col-md-8">{{flat[2]}}</div>
+                    <!--<div class="col-lg-9 col-md-8">Kevin Anderson</div>-->
+                  </div><br>
+
+                  <div class="row">
+                    {%if flat[3]%}
+                      <div class="col-lg-3 col-md-4 label"><b>Flat Size:</b></div>
+                      <div class="col-lg-9 col-md-8">{{flat[3]}}</div>
+                    {%else%}
+                      <div class="col-lg-3 col-md-4 label"><b>Flat Size:</b></div>
+                      <div class="col-lg-9 col-md-8">Please go to "Profile" to fill flat size</div>
+                    {%endif%}
+                  </div>
+                  
+
+            </div>
+          </div>
+
+        </div>
+
+        <!--<div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Example Card</h5>
+              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+            </div>
+          </div>
+
+        </div>-->
+      </div>
+    </section>

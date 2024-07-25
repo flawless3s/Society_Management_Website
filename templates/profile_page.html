@@ -85,11 +85,12 @@
                     <div class="col-lg-3 col-md-4 label">Email:</div>
                     <div class="col-lg-9 col-md-8">{{member_data[4]}}</div>
                   </div>
-
+                  {% if member_data[1] != 5%}
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Flat Size(BHK):</div>
-                    <div class="col-lg-9 col-md-8">{{ member_data[29] if member_data[29] else 'Please go to "Edit Profile" to fill in your flat size.'}}</div>
+                    <div class="col-lg-9 col-md-8">{{ member_data[30] if member_data[30] else 'Please go to "Edit Profile" to fill in your flat size.'}}</div>
                   </div>
+                  {%endif%}
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Registration Date:</div>
@@ -106,7 +107,7 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form method="POST" action="{{url_for('profile.profile')}}" enctype="multipart/form-data">
+                  <form method="POST" action="{{url_for('profile.profile')}}" enctype="multipart/form-data" id="profileForm">
                     {{ form.hidden_tag() }}
             
                     <div class="row mb-3">
@@ -129,6 +130,7 @@
                         <label for="uid" class="col-md-4 col-lg-3 col-form-label">User Id:</label>
                         <div class="col-md-8 col-lg-9">
                             <input name="uid" type="text" class="form-control" id="uid" value="{{ user.uid }}">
+                            <span id="status-uid" class="span_style"></span>
                         </div>
                     </div>
             
@@ -152,27 +154,19 @@
                             <input name="email" type="email" class="form-control" id="email" value="{{ user.email }}">
                         </div>
                     </div>
-            
-                    <div class="row mb-3">
-                        <label for="flat_size" class="col-md-4 col-lg-3 col-form-label">Flat Size(BHK):</label>
-                        <div class="col-md-8 col-lg-9">
-                          <input name="flat_size" type="text" class="form-control" id="flat_size" value="{{ user.flat_size if user.flat_size is not none else '' }}" placeholder="Please fill flat Size e.g. 3BHK">
-                        </div>
-                    </div>
+                    {% if member_data[1] != 5%}
+                      <div class="row mb-3">
+                          <label for="flat_size" class="col-md-4 col-lg-3 col-form-label">Flat Size:(BHK)</label>
+                          <div class="col-md-8 col-lg-9">
+                            <input name="flat_size" type="text" class="form-control" id="flat_size" value="{{ user.flat_size if user.flat_size is not none else '' }}" placeholder="Please fill flat Size e.g. 3BHK">
+                          </div>
+                      </div>
+                    {%endif%}
             
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                 </form>
-            
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="flash {{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-                {% endwith %}<!-- End Profile Edit Form -->
-
                 </div>
 
                 <div class="tab-pane fade pt-3" id="profile-settings">
@@ -219,12 +213,13 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form action="{{url_for('profile.change_password')}}" method="post" >
+                  <form action="{{url_for('profile.change_password')}}" method="post" id="passwordForm">
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="password" type="password" class="form-control" id="currentPassword">
+                        <span id="status-password" class="span_style"></span>
                       </div>
                     </div>
 
@@ -246,15 +241,6 @@
                       <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
                   </form><!-- End Change Password Form -->
-                  {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                      {% if category == 'error'%}
-                        <div class="flash {{ category }}" style="color: red;">{{ message }}</div>
-                      {% endif %}
-                    {% endfor %}
-                {% endif %}
-                {% endwith %}
                 </div>
 
               </div><!-- End Bordered Tabs -->

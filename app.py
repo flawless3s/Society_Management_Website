@@ -4,7 +4,6 @@ from database_connection import get_connection
 from drive_link_conversion import convert_drive_link
 from fetching_image import fetch_image_from_google_drive
 from secretary import secretary_bp
-from create import create_bp
 from signup import signup_bp
 from notice import notice_bp
 from maintenance import maintenance_bp
@@ -60,10 +59,11 @@ def login():
                         session['name'] = session_result[3]
                         session['sid'] = session_result[0]
                         session['approval'] = session_result[7]
-                        session['is_active'] = session_result[11]
+                        session['is_active'] = session_result[10]
                         direct_photo_link = session_result[6]
 
-                        session['photo'] = convert_drive_link(direct_photo_link)
+                        if direct_photo_link:
+                            session['photo'] = convert_drive_link(direct_photo_link)
 
                         if session['role'] != 1: 
                             session_db_query_2 = "SELECT s_name FROM Society_detail where sid = %s;"
@@ -71,7 +71,13 @@ def login():
                             session_result_2 = cursor.fetchone()
                             session['s_name'] = session_result_2[0] 
                         else:
-                            session['s_name'] = None                       
+                            session['s_name'] = None 
+
+                        if session['role'] != 5 and session['role'] != 1:
+                            session_db_query_3 = "SELECT flat_no From Flat_Details where uid=%s and sid = %s;"
+                            cursor.execute(session_db_query_3, (session['user_id'],session['sid']))
+                            session_result_3 = cursor.fetchone()
+                            session['flat_no'] = session_result_3[0]                    
 
 
                         return redirect(url_for('dashboard'))
@@ -88,7 +94,7 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/dashboard', methods =['GET'])
+@app.route('/dashboard', methods =['GET','POST'])
 def dashboard():
     if 'user_id' not in session:
         flash("Session has expired, Please login again.")
@@ -113,26 +119,25 @@ def dashboard():
     #  else:
     #     flash('Failed to fetch image data from Google Drive.')
     #     return redirect(url_for('login'))
-
+    result = request.args.get('result', None)
     if role == 1:
         return render_template('admin_dashboard.html', details = data,result='')
     elif role == 2:
-        return render_template('Secretary_dashboard.html', details = data)
+        return render_template('Secretary_dashboard.html', details = data,result=result)
     elif role == 3:
-        return render_template('Treasurer_dashboard.html', details = data)
+        return render_template('Treasurer_dashboard.html', details = data, result=result)
     elif role == 4:
         # bill = fetch_maintenance_data()
-        return render_template('Member_dashboard.html', details = data)
+        return render_template('Member_dashboard.html', details = data, result=result)
     elif role == 5:
         permission,expected = fetch_package_permission(), fetch_package_advance()
-        return render_template('Security_Dashboard.html', details = data, package_permissions = permission, packages_expected = expected)
+        return render_template('Security_Dashboard.html', details = data, package_permissions = permission, packages_expected = expected,result=result)
     # else:
     #     flash('Photo link not found in session.')
     #     return redirect(url_for('login'))
 
 app.register_blueprint(signup_bp)  
 app.register_blueprint(secretary_bp)
-app.register_blueprint(create_bp)
 app.register_blueprint(notice_bp)
 app.register_blueprint(package_bp)
 app.register_blueprint(document_bp)

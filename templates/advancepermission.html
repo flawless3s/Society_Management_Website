@@ -91,23 +91,20 @@
         <form action="{{ url_for('package_manager.advancepermission') }}" method="post" onsubmit="return validateForm()">
             <h2>Package Information</h2>
     
-            <label for="flat_no">Flat No:</label>                                <!-- invalid validation-->
-            <input type="text" id="flat_no" name="flat_no"><br><br>
-    
             <label for="package_desc">Package Description:</label>
-            <textarea id="package_desc" name="package_desc" rows="5"></textarea><br><br>
+            <textarea id="package_desc" name="package_desc" rows="5" required></textarea><br><br>
     
             <label for="date_arrival">Date of Arrival:</label>
-            <input type="date" id="date_arrival" name="date_arrival"><br><br>
+            <input type="date" id="date_arrival" name="date_arrival" required><br><br>
     
             <label for="time_arrival">Time of Arrival:</label>
-            <input type="time" id="time_arrival" name="time_arrival"><br><br>
+            <input type="time" id="time_arrival" name="time_arrival" required><br><br>
     
             <label for="permission">Permission:</label>
             <div>
-                <input type="radio" id="permission_yes" name="permission" value="true">
+                <input type="radio" id="permission_yes" name="permission" value="true" required>
                 <label for="permission_yes">YES</label>
-                <input type="radio" id="permission_no" name="permission" value="false">
+                <input type="radio" id="permission_no" name="permission" value="false" required>
                 <label for="permission_no">NO</label><br><br>
             </div>
     

@@ -32,6 +32,7 @@
         }
         label, input, select {
             margin-bottom: 10px;
+            height: 25px;
         }
         input[type="submit"] {
             background-color: rgb(227, 13, 13);
@@ -44,15 +45,25 @@
         input[type="submit"]:hover {
             background-color: darkred;
         }
+        .error {
+            border: 1px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="form-container">
-        <form action="{{ url_for('package_manager.permissionrequired') }}" method="post" onsubmit="return validateForm()">
+        <form action="{{ url_for('package_manager.permissionrequired') }}" method="post" id="permissionForm">
             <h2>Package Information</h2>
 
             <label for="flat_no">Flat No:</label>
-            <input type="text" id="flat_no" name="flat_no" required>
+            <input type="text" id="flat_no" name="flat_no" style="height: 25px;" required>
+            <span id="status-flat_no" class="error-message"></span>
             <br><br>
 
             <label for="package_desc">Package Description:</label>
@@ -64,41 +75,38 @@
             <label for="time_arrival">Time of Arrival:</label>
             <input type="time" id="time_arrival" name="time_arrival" required><br><br>
 
-            <div class="submit-button">
-                <input type="submit" value="Submit">
-            </div>
+            
+            <input type="submit" value="Submit">
+            
         </form>
     </div>
 
     <script>
-        function validateForm() {
-            var flatNo = document.getElementById("flat_no").value;
-            var packageDesc = document.getElementById("package_desc").value;
-            var dateArrival = document.getElementById("date_arrival").value;
-            var timeArrival = document.getElementById("time_arrival").value;
+        $(document).ready(function() {
+        $('#permissionForm').on('submit', function(event) {
+            event.preventDefault();
 
-            if (flatNo.trim() === "") {
-                alert("Please enter Flat No.");
-                return false;
-            }
+            var formData = {
+                flat_no: $('#flat_no').val(),
+            };
 
-            if (packageDesc.trim() === "") {
-                alert("Please enter Package Description.");
-                return false;
-            }
+            $.ajax({
+                type: 'POST',
+                url: '/package_manager/check_value',
+                contentType: 'application/json',
+                data: JSON.stringify({ values: formData }),
+                success: function(response) {
+                    console.log(response);
+                    $('#status-flat_no').text(!response.flat_noExists[0] ? "Flat number does'nt exist" : '');
 
-            if (dateArrival.trim() === "") {
-                alert("Please select Date of Arrival.");
-                return false;
-            }
 
-            if (timeArrival.trim() === "") {
-                alert("Please select Time of Arrival.");
-                return false;
-            }
-
-            return true;
-        }
+                    if (response.flat_noExists[0]) {
+                        $('#permissionForm')[0].submit(); // Submit the form
+                    }
+                }
+            });
+        });
+        });
     </script>
 </body>
 </html>

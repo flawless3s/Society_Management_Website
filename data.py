@@ -10,45 +10,11 @@ class user_data:
 
 
 
-class Maintenance:
-    def __init__(self,mid, sid, uid, item_name, bill_amt, bill_month, bill_year, payment_status, payment_date=None):
-        self.mid = mid
-        self.sid = sid
-        self.uid = uid
-        self.item_name = item_name
-        self.bill_amt = bill_amt
-        self.bill_month = bill_month
-        self.bill_year = bill_year
-        self.payment_status = payment_status
-        self.payment_date = payment_date
-
-    def __repr__(self):
-        return f"MaintenanceDisplay(sid={self.sid}, uid={self.uid}, item_name='{self.item_name}', bill_amt={self.bill_amt}, bill_month='{self.bill_month}', bill_year={self.bill_year}, payment_status={self.payment_status}, payment_date={self.payment_date})"
-
-
-
 def convert_tuples_to_objects(tuple_list, cls):
     return [cls(*t) for t in tuple_list]
 
 
 
-def fetch_maintenance_data():
-    connection = get_connection()
-    if connection:
-        try:
-            Maintenance_query = "Select * from maintenance_display where uid=%s ;"
-            value = (session['user_id'],)
-            # print(session['user_id'])
-
-            with connection.cursor() as cursor:
-                cursor.execute(Maintenance_query,value)
-                result = cursor.fetchall()
-                # print(result)
-                return convert_tuples_to_objects(result,Maintenance)
-        except Error as e:
-            return [('Could not fetch data')]        
-    else:
-        return 'Database connection failed'
     
 
 
@@ -79,7 +45,7 @@ def fetch_package_data():
             with connection.cursor() as cursor:
                 cursor.execute(flatno_query,value)
                 result = cursor.fetchone()
-                session['flat_no'] = result[0]
+                print(result)
 
                 if result:
                     package_query = "Select * from MyGate_Permission_Security where sid=%s and flat_no=%s and permission = '0';"
@@ -89,7 +55,7 @@ def fetch_package_data():
                     cursor.execute(package_query, value)
                     # print("Hello")
                     result = cursor.fetchall()
-                    #print(result)
+                    print(result)
                     return convert_tuples_to_objects(result,Item)
                 else:
                     return [('Could not fetch data')] 
@@ -133,35 +99,7 @@ def fetch_document_data():
     else:
         return 'Database connection failed'
 
-
-class FlatDetails:
-    def __init__(self, uid, flat_no, flat_size, month, year, rent):
-        self.uid = uid
-        self.flat_no = flat_no
-        self.flat_size = flat_size
-        self.month = month
-        self.year = year
-        self.rent = rent
-
-def fetch_flat_data():
-    connection = get_connection()
-    if connection:
-        try:
-            flatno_query = "Select * from Flat_details where uid=%s;"
-            value = (session['user_id'],)
-
-
-            with connection.cursor() as cursor:
-                cursor.execute(flatno_query,value)
-                result = cursor.fetchone()
-                return result
-    
-
-        except Error as e:
-            return [('Could not fetch data')]        
-    else:
-        return 'Database connection failed'
-    
+   
 
 
 

@@ -29,6 +29,7 @@
         }
         label, input, select {
             margin-bottom: 10px;
+            display: block;
             height: 25px;
         }
         input[type="submit"] {
@@ -43,10 +44,18 @@
         input[type="submit"]:hover {
             background-color: darkred;
         }
+        .hidden{
+            display: none;
+        }
+        span{
+            color: red;
+            font-size: 14px;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="form-container">
@@ -62,14 +71,6 @@
             </select>
             <br><br>
 
-            <label for="sec_duty">Security Duty: (For Security Personnel)</label>
-            <select name="sec_duty" id="sec_duty" style="height: 30px;">
-                <option value="">Select Duty</option>
-                <option value="None">None</option>
-                <option value="Night">Night</option>
-                <option value="Morning">Morning</option>
-            </select><br><br>
-
             <label for="society">Society Selection:</label>
             <select id="society" name="society" required style="height: 30px;">
                 <option value="">Select Society</option>
@@ -79,14 +80,17 @@
             </select>
             <br><br>
 
-            <label for="flat_no">Flat No: (For Residents)</label>
-            <input type="text" id="flat_no" name="flat_no"><br><br>
-            
+            <div id="conditionalElements">
+                <label for="flat_no">Flat No: </label>
+                <input type="text" id="flat_no" name="flat_no" style="width: 98%;"><span id="status-flat_no"></span><br><br>
+            </div>
+
+
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required><br><br>
 
             <label for="uid">User Name:</label>
-            <input type="text" id="uid" name="uid" required><br><br>
+            <input type="text" id="uid" name="uid" required><span id="status-uid"></span><br><br>
     
             <label for="phone_no">Phone number:</label>
             <input type="number" id="phone_no" name="phone_no" required><br><br>
@@ -103,22 +107,65 @@
 
     </div>
     <script>
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-            var phoneNo = document.getElementById('phone_no').value;
-            var email = document.getElementById('email').value;
-            var phonePattern = /^\d{10}$/;
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (!phonePattern.test(phoneNo)) {
-                alert('Phone number must be exactly 10 digits long.');
+       $(document).ready(function() {
+            $('#signupForm').on('submit', function(event) {
                 event.preventDefault();
-            }
 
-            if (!emailPattern.test(email)) {
-                alert('Please enter a valid email address.');
-                event.preventDefault();
-            }
+                var phoneNo = $('#phone_no').val();
+                var email = $('#email').val();
+                var phonePattern = /^\d{10}$/;
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                // Perform client-side validation
+                if (!phonePattern.test(phoneNo)) {
+                    alert('Phone number must be exactly 10 digits long.');
+                    return; // Prevent form submission
+                }
+
+                if (!emailPattern.test(email)) {
+                    alert('Please enter a valid email address.');
+                    return; // Prevent form submission
+                }
+
+                // Proceed with AJAX form submission if all validations pass
+                var formData = {
+                    role: $('#role').val(),
+                    society: $('#society').val(),
+                    flat_no: $('#flat_no').val(),
+                    uid: $('#uid').val(),
+                    phone_no: phoneNo, // Use the validated phone number
+                    email: email, // Use the validated email
+                    password: $('#password').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/signup/check_value',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ values: formData }),
+                    success: function(response) {
+                        console.log(response);
+                        $('#status-flat_no').text(response.flat_noExists[0] ? 'Flat number already exists' : '');
+                        $('#status-uid').text(response.uidExists[0] ? 'Username already exists' : '');
+
+                        if (!response.flat_noExists[0] && !response.uidExists[0]) {
+                            // Now submit the form using plain JavaScript
+                            document.getElementById('signupForm').submit();
+                        }
+                    }
+                });
+            });
+
+            $('#role').on('change', function() {
+                var conditionalElements = $('#conditionalElements');
+                if (this.value === '5') {
+                    conditionalElements.addClass('hidden');
+                } else {
+                    conditionalElements.removeClass('hidden');
+                }
+            });
         });
+
     </script>
     
 </body>

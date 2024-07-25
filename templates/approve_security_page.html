@@ -38,7 +38,6 @@
                                     <th scope="col">Security Id</th>
                                     <th scope="col">Security Name</th>
                                     <th scope="col">Phone No.</th>
-                                    <th scope="col">Duty</th>                                    
                                     <th scope="col">Action</th>
                                   </tr>
                                 </thead>
@@ -48,7 +47,6 @@
                                     <td>{{security[2]}}</th>
                                     <td>{{security[3]}}</td>
                                     <td>{{security[5]}}</td>
-                                    <td>{{security[9]}}</td>
                                     <td>
                                       <button type="button" class="btn btn-danger rounded-pill sdelete-btn" data-id="{{security[2]}}" >Delete</button>
                                     </td>
@@ -66,7 +64,6 @@
                               <th scope="col">Security Id</th>
                               <th scope="col">Security Name</th>
                               <th scope="col">Phone No.</th>
-                              <th scope="col">Duty</th>
                               <th scope="col">Registration Date</th>
                               <th scope="col">Action</th>
                               <th data-type="date" data-format="YYYY/DD/MM">Approval Date</th>
@@ -76,19 +73,20 @@
                             <td scope="row">{{security[2]}}</td>
                             <td scope="row">{{security[3]}}</td>
                             <td scope="row">{{security[5]}}</td>
-                            <td scope="row">{{security[9]}}</td>
-                              <td scope="row">{{security[8]}}</td>
-                              {%if not security[10]%}
-                                <td scope="row">
-                                  <div class="action-buttons">
-                                    <button class="approve-button" onclick="handleApproveSecurity(this)">Approve</button>
-                                    <button class="reject-button" onclick="handleRejectSecurity(this)">Reject</button>
-                                  </div>
-                                </td>
-                              {%else%}
-                                <td></td>
-                              {% endif %}
-                              <td>{{security[10] or 'N/A'}}</td>
+                            <td scope="row">{{security[8]}}</td>
+                            {% if security[10]==0 %}
+                              <td>Rejected</td>
+                            {%elif security[7]%}
+                              <td>Approved</td>
+                            {%else%}
+                              <td scope="row">
+                                <div class="action-buttons">
+                                  <button class="approve-button" onclick="handleApproveSecretary(this)">Approve</button>
+                                  <button class="reject-button" onclick="handleRejectSecretary(this)">Reject</button>
+                                </div>
+                              </td>
+                            {% endif %}
+                              <td>{{security[9] or 'N/A'}}</td>
                           </tr>
                           {%endfor%}
                       </table>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+<!-- Favicons -->
+<link href="{{ url_for('static', filename='dashboard_assets/img/favicon.png') }}" rel="icon">
+<link href="{{ url_for('static', filename='dashboard_assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link href="{{ url_for('static', filename='dashboard_assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='dashboard_assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='dashboard_assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='dashboard_assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='dashboard_assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='dashboard_assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='dashboard_assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link href="{{ url_for('static', filename='dashboard_assets/css/style.css') }}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+        .form-container {
+            width: auto;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+            color: black;
+        }
+  </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Society Edit</h2>
+    <form action="{{ url_for('admin.edit_row',row_id=row[0])}}" method="post" id="mainForm">                
+        <div class="row mb-3">
+          <label for="s_name" class="col-md-4 col-lg-3 col-form-label">Society Name:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="text" id="s_name" name="s_name" class="form-control" value="{{row[1]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="s_address" class="col-md-4 col-lg-3 col-form-label">Society Address:</label>
+          <div class="col-md-8 col-lg-9">
+            <textarea id="s_address" name="s_address" class="form-control" rows="4" required>{{row[2]}}</textarea>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="area" class="col-md-4 col-lg-3 col-form-label">Area:</label>
+          <div class="col-md-8 col-lg-9">
+            <select id="area" name="area" class="form-control"  required>
+                <option value="Urban" {% if row[3] == 'Urban' %}selected{% endif %}>Urban</option>
+                <option value="Rural" {% if row[3] == 'Rural' %}selected{% endif %}>Rural</option>
+                <!-- Add more options as needed -->
+            </select>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="city" class="col-md-4 col-lg-3 col-form-label">City:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="text" id="city" name="city" class="form-control" value="{{row[4]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="state" class="col-md-4 col-lg-3 col-form-label">State:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="text" id="state" name="state" class="form-control" value="{{row[5]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="country" class="col-md-4 col-lg-3 col-form-label">Country:</label>
+          <div class="col-md-8 col-lg-9">
+            <select id="country" name="country" class="form-control" required>
+              <option value="India">India</option>
+            </select>
+          </div>
+        </div>
+      
+        <!-- <div class="row mb-3">
+          <label for="sect_name" class="col-md-4 col-lg-3 col-form-label">Secretary Name:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="text" id="sect_name" name="sect_name" class="form-control" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="sect_number" class="col-md-4 col-lg-3 col-form-label">Secretary Number:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="number" id="sect_number" name="sect_number" class="form-control" required>
+          </div>
+        </div> -->
+      
+        <div class="row mb-3">
+          <label for="build_name" class="col-md-4 col-lg-3 col-form-label">Builder Name:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="text" id="build_name" name="build_name" class="form-control" value="{{row[7]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="build_number" class="col-md-4 col-lg-3 col-form-label">Builder Number:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="text" id="build_number" name="build_number" class="form-control" value="{{row[8]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="c_name" class="col-md-4 col-lg-3 col-form-label">Company Name:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="text" id="c_name" name="c_name" class="form-control" value="{{row[9]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="total_flats" class="col-md-4 col-lg-3 col-form-label">Total Flats:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="number" id="total_flats" name="total_flats" class="form-control" value="{{row[10]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="total_wings" class="col-md-4 col-lg-3 col-form-label">Total Wings:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="number" id="total_wings" name="total_wings" class="form-control" value="{{row[11]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="total_floor" class="col-md-4 col-lg-3 col-form-label">Total Floor:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="number" id="total_floor" name="total_floor" class="form-control" value="{{row[12]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="empty_flats" class="col-md-4 col-lg-3 col-form-label">Empty Flats:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="number" id="empty_flats" name="empty_flats" class="form-control" value="{{row[13]}}" required>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="flat_on_each_floor" class="col-md-4 col-lg-3 col-form-label">Flat on each Floor:</label>
+          <div class="col-md-8 col-lg-9">
+            <input type="number" id="flat_on_each_floor" name="flat_on_each_floor" class="form-control" value="{{row[14]}}" required>
+          </div>
+        </div>
+      
+        <div class="text-center">
+          <!-- <button type="button" class="btn btn-primary" id="openModalButton" data-bs-toggle="modal" data-bs-target="#societyIdModal">
+              Save Changes
+          </button> -->
+          <button type="submit" name="action" value="add" class="btn btn-primary" id="addButton">Save</button>
+        </div>
+    </form>
+    </div>
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
