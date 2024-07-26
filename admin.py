@@ -114,7 +114,7 @@ def edit_row(row_id):
         result = "Society Data Edited Successfully"
 
 
-        return redirect('dashboard',result=result)
+        return redirect(url_for('dashboard',result=result))
 
     return render_template('edit_row.html', row=row)
 
