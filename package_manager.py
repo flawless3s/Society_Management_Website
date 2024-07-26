@@ -1,7 +1,7 @@
 from flask import request, render_template, Blueprint,redirect, session, url_for, jsonify, flash
 from mysql.connector import Error
 from database_connection import get_connection
-from data import fetch_package_data
+from data import fetch_package_data, fetch_package_advance
 
 package_bp = Blueprint('package_manager',__name__,url_prefix='/package_manager')
 
@@ -9,9 +9,61 @@ package_bp = Blueprint('package_manager',__name__,url_prefix='/package_manager')
 def package_manager():
     if 'user_id' not in session:
         return redirect(url_for("login"))
-    item = fetch_package_data()     
-    return render_template('package_manager_page.html',items = item)
+    item = fetch_package_data()
+    expected = fetch_package_advance()    
+    return render_template('package_manager_page.html',items = item, packages_expected=expected)
 
+@package_bp.route('/edit/<int:row_id>', methods=['GET', 'POST'])
+def member_edit_row(row_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("Select * from MyGate_Resident where package_id=%s;", (row_id,))
+    row = cursor.fetchone()
+    # print(row)
+    cursor.close()
+
+    if request.method == 'POST':
+        Package_Description = request.form['package_desc']
+        Date_of_Arrival = request.form['date_arrival']
+        Time_of_Arrival = request.form['time_arrival']
+        Permission = 1 if request.form['permission'].lower() == 'true' else 0
+        
+        connection = get_connection()
+        cursor = connection.cursor()
+        values_tuple = (Package_Description, Date_of_Arrival, Time_of_Arrival, Permission, row_id)
+        # print(values_tuple)
+        cursor.execute("""
+            UPDATE MyGate_Resident
+            SET
+                package_desc = %s,
+                date_arrival = %s,
+                time_arrival = %s,
+                resident_permission = %s
+            WHERE package_id = %s;""", values_tuple)
+        connection.commit()
+        cursor.close()
+        result = "Permission Data Edited Successfully"
+
+
+        return redirect(url_for('dashboard',result=result))
+
+    return render_template('member_edit_row.html', row=row)
+
+
+@package_bp.route('/member_delete_permission/<int:item_id>', methods=['POST'])
+def member_delete_item(item_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM MyGate_Resident WHERE package_id = %s', (item_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'status': 'success','success':True, 'message': f'Item {item_id} rejected'})
+    except Error as e:
+        error_message = f"Error deleting item {item_id}: {str(e)}"
+        print(error_message)
+        # Handle the error gracefully, you can render an error template or return a JSON response
+        return jsonify({'status': 'error', 'message': error_message}), 500
 
 
 @package_bp.route('/advancepermission', methods=['POST','GET'])
@@ -129,6 +181,57 @@ def check_value():
     return jsonify({
         'flat_noExists': flat_exists,
     })
+
+@package_bp.route('/delete_permission/<int:item_id>', methods=['POST'])
+def delete_item(item_id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM MyGate_Permission_Security WHERE package_id = %s', (item_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'status': 'success','success':True, 'message': f'Item {item_id} rejected'})
+    except Error as e:
+        error_message = f"Error deleting item {item_id}: {str(e)}"
+        print(error_message)
+        # Handle the error gracefully, you can render an error template or return a JSON response
+        return jsonify({'status': 'error', 'message': error_message}), 500
+
+@package_bp.route('/edit/<int:row_id>', methods=['GET', 'POST'])
+def edit_row(row_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("Select * from MyGate_Permission_Security where package_id=%s;", (row_id,))
+    row = cursor.fetchone()
+    # print(row)
+    cursor.close()
+
+    if request.method == 'POST':
+        flat_no = request.form['flat_no']
+        package_desc = request.form['package_desc']
+        date = request.form['date_arrival']
+        time = request.form['time_arrival']
+        
+        connection = get_connection()
+        cursor = connection.cursor()
+        values_tuple = (flat_no, package_desc,date , time, row_id)
+        # print(values_tuple)
+        cursor.execute("""
+            UPDATE MyGate_Permission_Security
+            SET
+                flat_no = %s,
+                package_desc = %s,
+                date_arrival = %s,
+                time_arrival = %s
+            WHERE package_id = %s;""", values_tuple)
+        connection.commit()
+        cursor.close()
+        result = "Permission Data Edited Successfully"
+
+
+        return redirect(url_for('dashboard',result=result))
+
+    return render_template('security_edit_row.html', row=row)
 
     
 

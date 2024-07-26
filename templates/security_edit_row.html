@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(242, 242, 242);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select {
+            margin-bottom: 10px;
+            height: 25px;
+        }
+        input[type="submit"] {
+            background-color: rgb(227, 13, 13);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: darkred;
+        }
+        .error {
+            border: 1px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="form-container">
+        <form action="{{ url_for('package_manager.edit_row', row_id=row[0]) }}" method="post" id="permissionForm">
+            <h2>Package Information</h2>
+
+            <label for="flat_no">Flat No:</label>
+            <input type="text" id="flat_no" name="flat_no" style="height: 25px;" value="{{row[2]}}" required>
+            <span id="status-flat_no" class="error-message"></span>
+            <br><br>
+
+            <label for="package_desc">Package Description:</label>
+            <textarea id="package_desc" name="package_desc" rows="4"  required>{{row[3]}}</textarea><br><br>
+
+            <label for="date_arrival">Date of Arrival:</label>
+            <input type="date" id="date_arrival" name="date_arrival" value="{{row[4]}}" required><br><br>
+
+            <label for="time_arrival">Time of Arrival:</label>
+            <input type="time" id="time_arrival" name="time_arrival" value="{{row[5]}}" required><br><br>
+
+            
+            <input type="submit" value="Submit">
+            
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+        $('#permissionForm').on('submit', function(event) {
+            event.preventDefault();
+
+            var formData = {
+                flat_no: $('#flat_no').val(),
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/package_manager/check_value',
+                contentType: 'application/json',
+                data: JSON.stringify({ values: formData }),
+                success: function(response) {
+                    console.log(response);
+                    $('#status-flat_no').text(!response.flat_noExists[0] ? "Flat number does'nt exist" : '');
+
+
+                    if (response.flat_noExists[0]) {
+                        $('#permissionForm')[0].submit(); // Submit the form
+                    }
+                }
+            });
+        });
+        });
+    </script>
+</body>
+</html>
