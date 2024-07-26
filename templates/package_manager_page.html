@@ -82,5 +82,45 @@
 
         </div>-->
       </div>
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Package Expected in Advance</h5>
+
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Item Id</th>
+                    <th scope="col">Flat No.</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Arival Date</th>
+                    <th scope="col">Arrival Time</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for expected in packages_expected %}
+                  <tr>
+                    <th scope="row"><a href="#">{{loop.index}}</a></th>
+                    <td>{{expected.flat_no}}</td>
+                    <td><a href="#" class="text-primary">{{expected.package_desc}}</a></td>
+                    <td>{{expected.time_arrival}}</td>
+                    <td>{{expected.date_arrival}}</td>
+                    <td>
+                      <div class="action-buttons">
+                        <button type="button" class="btn btn-danger rounded-pill pmdelete-btn" data-id="{{expected.package_id}}">Delete</button>
+                        <a href="{{ url_for('package_manager.member_edit_row', row_id=expected.package_id) }}" target="_parent"><button type="button" class="btn btn-info rounded-pill">Edit</button></a>
+                      </div>
+                    </td>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </section>
 

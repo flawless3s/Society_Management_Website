@@ -812,3 +812,53 @@ $(document).ready(function() {
   });
 
 });
+
+
+//Permission Delete Button (Security) 
+$(document).ready(function() {
+  $(document).on('click', '.pdelete-btn', function() {
+      if (confirm("Are you sure you want to delete this particular permission?")) {
+          var itemId = $(this).data('id');
+          var row = $(this).closest('tr');
+          $.ajax({
+              url: '/package_manager/delete_permission/' + itemId,
+              type: 'POST',
+              success: function(response) {
+                  if (response.success) {
+                      row.remove();
+                  } else {
+                      alert('Failed to delete this permission.');
+                  }
+              },
+              error: function() {
+                  alert('Error occurred while trying to delete this Permission.');
+              }
+          });
+      }
+  });
+});
+
+
+//Permission Delete Button (Member)
+$(document).ready(function() {
+  $(document).on('click', '.pmdelete-btn', function() {
+      if (confirm("Are you sure you want to delete this particular permission?")) {
+          var itemId = $(this).data('id');
+          var row = $(this).closest('tr');
+          $.ajax({
+              url: '/package_manager/member_delete_permission/' + itemId,
+              type: 'POST',
+              success: function(response) {
+                  if (response.success) {
+                      row.remove();
+                  } else {
+                      alert('Failed to delete this permission.');
+                  }
+              },
+              error: function() {
+                  alert('Error occurred while trying to delete this Permission.');
+              }
+          });
+      }
+  });
+});

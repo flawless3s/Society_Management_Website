@@ -206,12 +206,13 @@
                         <th scope="col">Arival Date</th>
                         <th scope="col">Arrival Time</th>
                         <th scope="col">Permission</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for permissions in package_permissions %}
-                      <tr>
-                        <th scope="row"><a href="#">{{permissions.item_id}}</a></th>
+                      <tr data-id="{{permissions.item_id}}">
+                        <th scope="row"><a href="#">{{loop.index}}</a></th>
                         <td>{{permissions.flat_no}}</td>
                         <td><a href="#" class="text-primary">{{permissions.package_desc}}</a></td>
                         <td>{{permissions.time_arrival}}</td>
@@ -223,6 +224,12 @@
                         {% else %}
                             <td><span class="badge bg-danger">Not Approved</span></td>
                         {% endif %}
+                        <td>
+                          <div class="action-buttons">
+                            <button type="button" class="btn btn-danger rounded-pill pdelete-btn" data-id="{{permissions.item_id}}">Delete</button>
+                            <a href="{{ url_for('package_manager.edit_row', row_id=permissions.item_id) }}" target="_parent"><button type="button" class="btn btn-info rounded-pill">Edit</button></a>
+                          </div>
+                        </td>
                       </tr>
                       {% endfor %}
                     </tbody>
