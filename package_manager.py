@@ -13,7 +13,7 @@ def package_manager():
     expected = fetch_package_advance()    
     return render_template('package_manager_page.html',items = item, packages_expected=expected)
 
-@package_bp.route('/edit/<int:row_id>', methods=['GET', 'POST'])
+@package_bp.route('/member_edit/<int:row_id>', methods=['GET', 'POST'])
 def member_edit_row(row_id):
     connection = get_connection()
     cursor = connection.cursor()
@@ -203,7 +203,7 @@ def edit_row(row_id):
     cursor = connection.cursor()
     cursor.execute("Select * from MyGate_Permission_Security where package_id=%s;", (row_id,))
     row = cursor.fetchone()
-    # print(row)
+    print(row)
     cursor.close()
 
     if request.method == 'POST':

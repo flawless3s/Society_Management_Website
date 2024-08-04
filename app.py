@@ -127,10 +127,11 @@ def dashboard():
     elif role == 3:
         return render_template('Treasurer_dashboard.html', details = data, result=result)
     elif role == 4:
-        # bill = fetch_maintenance_data()
+        # bill = fetch_mantenance_data()
         return render_template('Member_dashboard.html', details = data, result=result)
     elif role == 5:
         permission,expected = fetch_package_permission(), fetch_package_advance()
+        print(permission)
         return render_template('Security_Dashboard.html', details = data, package_permissions = permission, packages_expected = expected,result=result)
     # else:
     #     flash('Photo link not found in session.')

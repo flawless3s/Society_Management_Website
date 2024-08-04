@@ -710,6 +710,7 @@ function handleApproveSecretary(button) {
   });
 }
 
+
 function handleRejectSecretary(button) {
   const row = button.closest('tr');
   const itemId = row.getAttribute('row-id');
@@ -773,6 +774,46 @@ $(document).ready(function() {
   });
 
 });
+
+function handleApproveMember(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Approving secretary:', itemId);
+
+  $.post(`/secretary/approve/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightgreen';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightgreen';
+      });
+    } else {
+      alert(response.message);
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error approving:', textStatus, errorThrown);
+  });
+}
+
+function handleRejectMember(button) {
+  const row = button.closest('tr');
+  const itemId = row.getAttribute('row-id');
+  console.log('Rejecting Secretary:', itemId);
+
+  $.post(`/secretary/reject/${itemId}`, function(response) {
+    if (response.status === 'success') {
+      row.style.backgroundColor = 'lightcoral';
+      row.querySelectorAll('td').forEach(td => {
+        td.style.backgroundColor = 'lightcoral';
+      });
+    } else {
+      alert(response.message);
+      console.error(response.message);
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error rejecting:', textStatus, errorThrown);
+  });
+}
 
 // Password checking
 $(document).ready(function() {
